@@ -26,23 +26,60 @@ export default function App() {
   const [activeSection, setActiveSection] = useState('about');
 
   useEffect(() => {
-    // Read initial URL path
-    const path = window.location.pathname;
-    if (['/achievements', '/certifications', '/experience'].includes(path)) {
-      setCurrentPath(path);
-    }
+    // 1. Sanitize any /# or hash from the URL so /# never shows in the route
+    const sanitizeRoute = () => {
+      const fullUrl = window.location.href;
+      const hash = window.location.hash;
+      const pathname = window.location.pathname;
+
+      if (hash || fullUrl.includes('/#')) {
+        const cleanHash = hash.replace(/^#\/?/, '').trim();
+        if (['achievements', 'certifications', 'experience'].includes(cleanHash)) {
+          setCurrentPath(`/${cleanHash}`);
+          window.history.replaceState(null, '', `/${cleanHash}`);
+        } else {
+          // If the hash is an on-page section (about, experience, portfolio, contact, etc.)
+          if (cleanHash) {
+            setTimeout(() => {
+              const el = document.getElementById(cleanHash);
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }
+          // Cleanly replace /# with clean pathname /
+          const targetPath = ['/achievements', '/certifications', '/experience'].includes(pathname)
+            ? pathname
+            : '/';
+          setCurrentPath(targetPath);
+          window.history.replaceState(null, '', targetPath);
+        }
+      } else {
+        if (['/achievements', '/certifications', '/experience'].includes(pathname)) {
+          setCurrentPath(pathname);
+        } else {
+          setCurrentPath('/');
+        }
+      }
+    };
+
+    sanitizeRoute();
 
     const handlePopState = () => {
-      setCurrentPath(window.location.pathname || '/');
+      sanitizeRoute();
     };
 
     window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    window.addEventListener('hashchange', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('hashchange', handlePopState);
+    };
   }, []);
 
   const handleNavigate = (path: string) => {
-    setCurrentPath(path);
-    window.history.pushState({}, '', path);
+    // Ensure clean route without /# or trailing #
+    const cleanPath = path.replace(/^\/#/, '/').replace(/#.*$/, '') || '/';
+    setCurrentPath(cleanPath);
+    window.history.pushState({}, '', cleanPath);
   };
 
   useEffect(() => {

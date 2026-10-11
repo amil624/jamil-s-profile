@@ -99,29 +99,40 @@ export const EducationReferences: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between">
-                    <a
-                      href={`mailto:${ref.email}`}
-                      className="text-xs text-slate-300 hover:text-white flex items-center gap-1.5 transition-colors font-mono"
-                    >
-                      <Mail className="w-3.5 h-3.5 text-rose-400" />
-                      <span>{ref.email}</span>
-                    </a>
-                    
-                    <button
-                      onClick={() => copyEmail(ref.email)}
-                      className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition-colors text-xs flex items-center gap-1"
-                      title="Copy email address"
-                    >
-                      {copiedEmail === ref.email ? (
-                        <>
-                          <Check className="w-3.5 h-3.5 text-emerald-400" />
-                          <span className="text-[10px] text-emerald-400">Copied</span>
-                        </>
-                      ) : (
-                        <Copy className="w-3.5 h-3.5" />
-                      )}
-                    </button>
+                  <div className="pt-3 border-t border-slate-800/80 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <a
+                        href={`mailto:${ref.email}`}
+                        className="text-xs text-slate-300 hover:text-white flex items-center gap-1.5 transition-colors font-mono"
+                      >
+                        <Mail className="w-3.5 h-3.5 text-rose-400" />
+                        <span>{ref.email}</span>
+                      </a>
+                      
+                      <button
+                        onClick={() => copyEmail(ref.email)}
+                        className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition-colors text-xs flex items-center gap-1"
+                        title="Copy email address"
+                      >
+                        {copiedEmail === ref.email ? (
+                          <>
+                            <Check className="w-3.5 h-3.5 text-emerald-400" />
+                            <span className="text-[10px] text-emerald-400">Copied</span>
+                          </>
+                        ) : (
+                          <Copy className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+                    </div>
+
+                    {ref.phone && (
+                      <div className="text-xs text-slate-400 flex items-center gap-1.5 font-mono pt-1">
+                        <span className="text-indigo-400 font-semibold">Phone:</span>
+                        <a href={`tel:${ref.phone}`} className="hover:text-indigo-300 transition-colors">
+                          {ref.phone}
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}

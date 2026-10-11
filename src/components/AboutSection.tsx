@@ -41,12 +41,28 @@ export const AboutSection: React.FC = () => {
           <div className="p-6 sm:p-8 md:p-10 rounded-[1.75rem] sm:rounded-[2rem] border border-[#3B82F6]/20 bg-[#0A1F4D]/40 backdrop-blur-md flex flex-col h-full shadow-[0_4px_30px_rgba(0,0,0,0.2)] hover:border-[#06B6D4]/30 transition-all group">
             
             <div className="flex items-center gap-4 sm:gap-5 mb-6 sm:mb-8">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-[#06B6D4]/30 bg-[#06B6D4]/10 flex items-center justify-center group-hover:bg-[#06B6D4]/20 transition-colors shrink-0">
-                <User className="w-5 h-5 sm:w-6 sm:h-6 text-[#06B6D4]" />
+              <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden border-2 border-[#06B6D4]/50 shadow-[0_0_20px_rgba(6,182,212,0.35)] shrink-0 bg-[#0A1F4D]">
+                <img
+                  src="/images/jamil_profile_official.jpg"
+                  alt="Md. Jamil Hosen Khandakar Profile"
+                  className="w-full h-full object-cover object-top"
+                  onError={(e) => {
+                    const target = e.currentTarget as HTMLImageElement;
+                    if (!target.dataset.triedFallback) {
+                      target.dataset.triedFallback = 'true';
+                      target.src = 'https://ik.imagekit.io/Jamils/Jamil%20Hosen%20Khandakar.%20Jpg%20(1).heif?tr=f-auto,w-150,h-150';
+                    }
+                  }}
+                />
               </div>
-              <h3 className="text-2xl sm:text-3xl font-black text-[#F8FAFC] font-display">
-                About Me
-              </h3>
+              <div>
+                <h3 className="text-2xl sm:text-3xl font-black text-[#F8FAFC] font-display">
+                  About Me
+                </h3>
+                <span className="text-xs text-[#00D1FF] font-semibold">
+                  Md. Jamil Hosen Khandakar
+                </span>
+              </div>
             </div>
 
             <div className="space-y-3.5 sm:space-y-4 text-[#CBD5E1] text-xs sm:text-sm md:text-base leading-relaxed mb-6 sm:mb-8 max-w-2xl flex-grow font-light">
@@ -128,19 +144,19 @@ export const AboutSection: React.FC = () => {
 
               {/* SSC */}
               <div className="relative">
-                <div className="absolute top-1.5 -left-[33px] sm:-left-[41px] w-4 h-4 rounded-full bg-[#050B18] border-2 border-slate-600 flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 rounded-full bg-slate-400" />
+                <div className="absolute top-1.5 -left-[33px] sm:-left-[41px] w-4 h-4 rounded-full bg-[#050B18] border-2 border-[#3B82F6] flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.6)]">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#00D1FF]" />
                 </div>
                 <h4 className="text-sm sm:text-base font-bold text-[#F8FAFC] mb-1 leading-tight">
                   Secondary School Certificate (SSC)
                 </h4>
-                <p className="text-slate-400 text-xs sm:text-sm mb-1">
-                  Pirgachha J.N. Govt. Model High School
+                <p className="text-[#00D1FF] font-medium text-xs sm:text-sm mb-1">
+                  Jnankur High School, Pirgachha, Rangpur &bull; Dinajpur Board
                 </p>
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-[#94A3B8]">
-                  <span>Passed in 2018</span>
+                  <span>Science / Humanities</span>
                   <span>&bull;</span>
-                  <span className="text-slate-300 font-medium">GPA: 4.89 / 5.00</span>
+                  <span className="text-[#34D399] font-bold">GPA: 5.00 / 5.00</span>
                 </div>
               </div>
 

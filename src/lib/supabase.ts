@@ -35,6 +35,133 @@ export interface EndorsementEntry {
   created_at?: string;
 }
 
+export interface PortfolioImage {
+  id: string;
+  title: string;
+  category: string;
+  caption: string;
+  image_url: string;
+  aspect_ratio?: string;
+  section: string;
+  sort_order: number;
+  created_at?: string;
+}
+
+/**
+ * The 4 canonical given authentic images of Md. Jamil Hosen Khandakar
+ */
+export const GIVEN_IMAGES: PortfolioImage[] = [
+  {
+    id: 'jamil-portrait',
+    title: 'Md. Jamil Hosen Khandakar',
+    category: 'Executive Leadership & HR Governance',
+    caption:
+      'Official Executive Committee Portrait — Vice President, Resource Management & Planning at Rajshahi University Business Club',
+    image_url: '/images/jamil_profile_official.jpg',
+    aspect_ratio: '3/4',
+    section: 'hero-profile',
+    sort_order: 1,
+  },
+  {
+    id: 'casecation-award',
+    title: 'CaseCation Season 2 Grand Finale',
+    category: 'National Business Case Competition & Production',
+    caption:
+      'Recognition at CaseCation Season 2 Grand Finale Stage Ceremony — Led 15-member Branding & Production team producing 450+ assets',
+    image_url: '/images/casecation_award.jpg',
+    aspect_ratio: '16/10',
+    section: 'portfolio-casecation',
+    sort_order: 2,
+  },
+  {
+    id: 'hult-team-ru',
+    title: 'Hult Prize at University of Rajshahi',
+    category: 'Global Social Entrepreneurship Challenge',
+    caption:
+      'Hult Prize Organizing Committee on Campus Grounds — Deputy Campus Director coordinating 50+ members and 750+ participating student teams',
+    image_url: '/images/hult_team_ru.jpg',
+    aspect_ratio: '16/10',
+    section: 'portfolio-hult',
+    sort_order: 3,
+  },
+  {
+    id: 'pathchinhno-social',
+    title: 'Project Pathochinhno (পথ চিহ্ন)',
+    category: 'Environmental & Community Impact',
+    caption:
+      'Youth environmental volunteers along the Padma River in Rajshahi — The Green FootPrint (170+ trees planted) & Mission BluePulse',
+    image_url: '/images/pathchinhno_social.jpg',
+    aspect_ratio: '16/10',
+    section: 'portfolio-pathchinhno',
+    sort_order: 4,
+  },
+];
+
+/**
+ * Fetch portfolio images from Supabase database.
+ * If Supabase table exists and has rows, returns them.
+ * If empty or table pending, falls back to GIVEN_IMAGES.
+ */
+export async function fetchPortfolioImages(): Promise<PortfolioImage[]> {
+  try {
+    const { data, error } = await supabase
+      .from('portfolio_images')
+      .select('*')
+      .order('sort_order', { ascending: true });
+
+    if (error) {
+      // Table might not exist yet in Postgres schema cache
+      console.info('Supabase portfolio_images notice:', error.message);
+      return GIVEN_IMAGES;
+    }
+
+    if (data && data.length > 0) {
+      return data as PortfolioImage[];
+    }
+
+    // Table exists but is empty -> automatically seed given images
+    await storePortfolioImages(GIVEN_IMAGES);
+    return GIVEN_IMAGES;
+  } catch (err) {
+    console.warn('Error fetching portfolio images from Supabase:', err);
+    return GIVEN_IMAGES;
+  }
+}
+
+/**
+ * Store or upsert given images into the Supabase database
+ */
+export async function storePortfolioImages(
+  images: PortfolioImage[] = GIVEN_IMAGES
+): Promise<{ success: boolean; count?: number; error?: string }> {
+  try {
+    const records = images.map((img, idx) => ({
+      id: img.id,
+      title: img.title,
+      category: img.category,
+      caption: img.caption,
+      image_url: img.image_url,
+      aspect_ratio: img.aspect_ratio || '16/10',
+      section: img.section || 'portfolio',
+      sort_order: img.sort_order ?? idx + 1,
+      updated_at: new Date().toISOString(),
+    }));
+
+    const { error } = await supabase
+      .from('portfolio_images')
+      .upsert(records, { onConflict: 'id' });
+
+    if (error) {
+      return { success: false, error: error.message };
+    }
+
+    return { success: true, count: records.length };
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : 'Database error storing images';
+    return { success: false, error: msg };
+  }
+}
+
 /**
  * Submit contact message to Supabase database.
  * Table expected: 'contact_messages'
@@ -195,4 +322,46 @@ CREATE POLICY "Allow public read on endorsements"
 
 CREATE POLICY "Allow public insert on endorsements"
   ON public.endorsements FOR INSERT WITH CHECK (true);
+
+-- 3. Given Portfolio Images Storage Table
+CREATE TABLE IF NOT EXISTS public.portfolio_images (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  category TEXT NOT NULL,
+  caption TEXT,
+  image_url TEXT NOT NULL,
+  aspect_ratio TEXT DEFAULT '16/10',
+  section TEXT DEFAULT 'portfolio',
+  sort_order INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE public.portfolio_images ENABLE ROW LEVEL SECURITY;
+
+-- Allow public read, insert, and update
+CREATE POLICY "Allow public read on portfolio_images"
+  ON public.portfolio_images FOR SELECT USING (true);
+
+CREATE POLICY "Allow public insert on portfolio_images"
+  ON public.portfolio_images FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Allow public update on portfolio_images"
+  ON public.portfolio_images FOR UPDATE USING (true);
+
+-- Pre-seed the 4 Given Authentic Images into Database
+INSERT INTO public.portfolio_images (id, title, category, caption, image_url, aspect_ratio, section, sort_order)
+VALUES
+  ('jamil-portrait', 'Md. Jamil Hosen Khandakar', 'Executive Leadership & HR Governance', 'Official Executive Committee Portrait — Vice President, Resource Management & Planning at Rajshahi University Business Club', '/images/jamil_profile_official.jpg', '3/4', 'hero-profile', 1),
+  ('casecation-award', 'CaseCation Season 2 Grand Finale', 'National Business Case Competition & Production', 'Recognition at CaseCation Season 2 Grand Finale Stage Ceremony — Led 15-member Branding & Production team producing 450+ assets', '/images/casecation_award.jpg', '16/10', 'portfolio-casecation', 2),
+  ('hult-team-ru', 'Hult Prize at University of Rajshahi', 'Global Social Entrepreneurship Challenge', 'Hult Prize Organizing Committee on Campus Grounds — Deputy Campus Director coordinating 50+ members and 750+ participating student teams', '/images/hult_team_ru.jpg', '16/10', 'portfolio-hult', 3),
+  ('pathchinhno-social', 'Project Pathochinhno (পথ চিহ্ন)', 'Environmental & Community Impact', 'Youth environmental volunteers along the Padma River in Rajshahi — The Green FootPrint (170+ trees planted) & Mission BluePulse', '/images/pathchinhno_social.jpg', '16/10', 'portfolio-pathchinhno', 4)
+ON CONFLICT (id) DO UPDATE SET
+  title = EXCLUDED.title,
+  category = EXCLUDED.category,
+  caption = EXCLUDED.caption,
+  image_url = EXCLUDED.image_url,
+  aspect_ratio = EXCLUDED.aspect_ratio,
+  section = EXCLUDED.section,
+  sort_order = EXCLUDED.sort_order;
 `;

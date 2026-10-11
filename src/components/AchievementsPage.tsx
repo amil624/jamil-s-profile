@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Trophy, Award, Medal, Star, ExternalLink, Calendar, Users } from 'lucide-react';
+import { ArrowLeft, Trophy, Award, Medal, Star, ExternalLink, Calendar, Users, ZoomIn, X } from 'lucide-react';
 
 interface AchievementsPageProps {
   onNavigate: (path: string) => void;
@@ -7,6 +7,7 @@ interface AchievementsPageProps {
 
 export const AchievementsPage: React.FC<AchievementsPageProps> = ({ onNavigate }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [activeModal, setActiveModal] = useState<{ title: string; image: string; organizer: string } | null>(null);
 
   const categories = ['All', 'Case Competition', 'National Challenge', 'Diplomacy & MUN', 'University & Sports'];
 
@@ -23,6 +24,77 @@ export const AchievementsPage: React.FC<AchievementsPageProps> = ({ onNavigate }
       description:
         'Selected as one of the national finalists among hundreds of nationwide entries. Developed an actionable social business venture model addressing environmental sustainability and youth empowerment.',
       impact: 'Top finalist squad at intensive regional boot-camp; pitched before UNICEF and JAAGO judges.',
+      image: '/images/cert_unicef_imagen.jpg',
+    },
+    {
+      id: 'ignite-writing',
+      title: 'Ignite 3.0 Article Writing Competition',
+      category: 'Case Competition',
+      badge: 'Champion (1st Place)',
+      badgeColor: 'border-amber-500/30 bg-amber-500/10 text-amber-300',
+      organizer: 'Rajshahi University Business Club (RUBC)',
+      year: '2024',
+      location: 'University of Rajshahi',
+      description:
+        'Clinched the championship in the flagship business article writing segment. Authored an incisive analysis of macroeconomic transitions and youth enterprise viability.',
+      impact: 'Awarded 1st place among top student contributors across faculties.',
+      image: '/images/ignite_champion_award.jpg',
+    },
+    {
+      id: 'casecation-production-award',
+      title: 'CaseCation Season 2 Production Excellence Award',
+      category: 'Case Competition',
+      badge: 'Executive Felicitation',
+      badgeColor: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300',
+      organizer: 'Rajshahi University Business Club',
+      year: 'Oct 2025',
+      location: 'Kazi Nazrul Islam Auditorium, RU',
+      description:
+        'Formally recognized on stage during the National Grand Finale for curating 450+ assets, designing 20+ university banners, and steering visual production with zero operational delays.',
+      impact: 'Received special crest and certificate for distinguished leadership in creative branding.',
+      image: '/images/casecation_award.jpg',
+    },
+    {
+      id: 'aspire-leaders-program',
+      title: 'Aspire Leadership Program 2025',
+      category: 'National Challenge',
+      badge: 'Global Graduate',
+      badgeColor: 'border-rose-500/30 bg-rose-500/10 text-rose-300',
+      organizer: 'Aspire Institute (Founded by Harvard University Faculty)',
+      year: '2025',
+      location: 'Global Leadership Cohort',
+      description:
+        'Completed rigorous leadership modules focusing on strengths-based leadership, global cross-cultural collaboration, and design thinking.',
+      impact: 'Endorsed by Harvard faculty co-founders with official completion credential.',
+      image: '/images/cert_aspire_leaders.jpg',
+    },
+    {
+      id: 'bylc-event-award',
+      title: 'Event Planning & Project Management Certification',
+      category: 'National Challenge',
+      badge: 'Certified Leadership',
+      badgeColor: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300',
+      organizer: 'Bangladesh Youth Leadership Center (BYLC)',
+      year: '2024',
+      location: 'BYLC Headquarters / Online',
+      description:
+        'Certified training covering the full project lifecycle, risk contingency planning, critical path method, and stakeholder mobilization.',
+      impact: 'Completed professional development curriculum at premier youth leadership institute.',
+      image: '/images/cert_bylc_project.jpg',
+    },
+    {
+      id: 'hult-ru-organizer',
+      title: 'Hult Prize Leadership Recognition',
+      category: 'National Challenge',
+      badge: 'Deputy Campus Director',
+      badgeColor: 'border-fuchsia-500/30 bg-fuchsia-500/10 text-fuchsia-300',
+      organizer: 'Hult Prize Global Foundation & University of Rajshahi',
+      year: '2024 – 2025',
+      location: 'University of Rajshahi Chapter',
+      description:
+        'Awarded Certificate of Appreciation for successfully mobilizing 750+ candidate teams and coordinating regional outreach across Northern Bangladesh.',
+      impact: 'Set all-time high participation benchmark across university history.',
+      image: '/images/cert_hult_prize.jpg',
     },
     {
       id: 'mun-metropolitan',
@@ -38,32 +110,6 @@ export const AchievementsPage: React.FC<AchievementsPageProps> = ({ onNavigate }
       impact: 'Recognized by executive board for multilateral diplomacy and policy framework precision.',
     },
     {
-      id: 'ignite-writing',
-      title: 'Ignite 3.0 Article Writing Competition',
-      category: 'Case Competition',
-      badge: 'Champion (1st Place)',
-      badgeColor: 'border-amber-500/30 bg-amber-500/10 text-amber-300',
-      organizer: 'Rajshahi University Business Club (RUBC)',
-      year: '2024',
-      location: 'University of Rajshahi',
-      description:
-        'Clinched the championship in the flagship business article writing segment. Authored an incisive analysis of macroeconomic transitions and youth enterprise viability.',
-      impact: 'Awarded 1st place among top student contributors across faculties.',
-    },
-    {
-      id: 'casecation-production-award',
-      title: 'CaseCation Season 2 Production Excellence Award',
-      category: 'Case Competition',
-      badge: 'Executive Felicitation',
-      badgeColor: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300',
-      organizer: 'Rajshahi University Business Club',
-      year: 'Oct 2025',
-      location: 'Kazi Nazrul Islam Auditorium, RU',
-      description:
-        'Formally recognized on stage during the National Grand Finale for curating 450+ assets, designing 20+ university banners, and steering visual production with zero operational delays.',
-      impact: 'Received special crest and certificate for distinguished leadership in creative branding.',
-    },
-    {
       id: 'basketball-tournament',
       title: 'Inter Department Basketball Tournament',
       category: 'University & Sports',
@@ -77,17 +123,17 @@ export const AchievementsPage: React.FC<AchievementsPageProps> = ({ onNavigate }
       impact: 'Silver medal; contributed to inter-department camaraderie and athletic performance.',
     },
     {
-      id: 'hult-ru-organizer',
-      title: 'Hult Prize Global Recognition for Campus Impact',
-      category: 'National Challenge',
-      badge: 'Outstanding Leadership',
-      badgeColor: 'border-fuchsia-500/30 bg-fuchsia-500/10 text-fuchsia-300',
-      organizer: 'Hult Prize Foundation Global Headquarters',
-      year: '2024',
-      location: 'University of Rajshahi Chapter',
+      id: 'best-talented-face',
+      title: 'Best Talented Face Award',
+      category: 'University & Sports',
+      badge: 'Champion (1st Place)',
+      badgeColor: 'border-yellow-500/30 bg-yellow-500/10 text-yellow-300',
+      organizer: 'Pirgachha Upazila Quiz Competition',
+      year: 'Competitive Award',
+      location: 'Pirgachha, Rangpur',
       description:
-        'Awarded Certificate of Appreciation for successfully mobilizing 750+ candidate teams and coordinating regional outreach across Northern Bangladesh.',
-      impact: 'Surpassed past campus engagement records by over 40%.',
+        'Secured first place across upazila-level competitive academic and general knowledge tournament evaluating critical reasoning and current affairs.',
+      impact: 'Top individual ranking across all participating colleges.',
     },
   ];
 
@@ -158,6 +204,31 @@ export const AchievementsPage: React.FC<AchievementsPageProps> = ({ onNavigate }
             className="p-5 sm:p-7 rounded-[1.75rem] sm:rounded-[2rem] border border-[#3B82F6]/20 bg-[#050B18]/90 backdrop-blur-xl shadow-2xl flex flex-col justify-between hover:border-[#00D1FF]/40 hover:scale-[1.01] transition-all group"
           >
             <div>
+              {/* Optional Visual Image Card */}
+              {item.image && (
+                <div
+                  onClick={() => setActiveModal({ title: item.title, image: item.image!, organizer: item.organizer })}
+                  className="mb-4 relative rounded-xl overflow-hidden border border-white/10 bg-[#030B14] cursor-pointer group/cardimg aspect-[4/3] shadow-lg"
+                >
+                  <img
+                    src={item.image}
+                    alt={`${item.title}`}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover/cardimg:scale-105"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover/cardimg:opacity-40 transition-opacity" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/cardimg:opacity-100 transition-opacity bg-black/40 backdrop-blur-xs">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/90 text-white text-xs font-semibold border border-white/30 shadow-xl">
+                      <ZoomIn className="w-3.5 h-3.5 text-[#00D1FF]" />
+                      <span>View Full Image</span>
+                    </span>
+                  </div>
+                  <span className="absolute bottom-2 left-2 text-[10px] font-bold text-white/90 bg-slate-950/80 px-2 py-0.5 rounded border border-white/10 backdrop-blur-sm">
+                    {item.badge}
+                  </span>
+                </div>
+              )}
+
               <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4">
                 <span className="text-[10px] font-bold text-[#00C4CC] uppercase tracking-wider">
                   {item.category}
@@ -192,6 +263,45 @@ export const AchievementsPage: React.FC<AchievementsPageProps> = ({ onNavigate }
           </div>
         ))}
       </div>
+
+      {/* Modal Lightbox */}
+      {activeModal && (
+        <div
+          onClick={() => setActiveModal(null)}
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-4xl w-full bg-[#050B18] border border-white/20 rounded-2xl overflow-hidden shadow-2xl"
+          >
+            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-slate-900/80">
+              <div>
+                <h3 className="text-sm sm:text-base font-bold text-white">
+                  {activeModal.title}
+                </h3>
+                <p className="text-xs text-[#00D1FF]">
+                  {activeModal.organizer}
+                </p>
+              </div>
+              <button
+                onClick={() => setActiveModal(null)}
+                className="p-1.5 rounded-lg bg-white/10 text-slate-300 hover:text-white hover:bg-white/20 transition-colors"
+                aria-label="Close Preview"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-2 sm:p-4 bg-black/50 flex items-center justify-center max-h-[80vh] overflow-auto">
+              <img
+                src={activeModal.image}
+                alt={activeModal.title}
+                className="max-h-[75vh] w-auto object-contain rounded-lg shadow-2xl border border-white/10"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

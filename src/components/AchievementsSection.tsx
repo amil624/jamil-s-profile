@@ -39,40 +39,58 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({ onNavi
 
   const podiumCards = [
     {
-      title: 'ImaGen Ventures Youth Challenge 2024-25',
-      badge: 'Finalist',
-      category: 'NATIONAL INNOVATION CHALLENGE',
-      organizer: 'UNICEF, Generation Unlimited & JAAGO Foundation',
-      year: '2024',
-      image: '/src/assets/images/casecation_award_1789908370602.jpg',
-      description: 'Selected as national finalist at Mymensingh Regional Boot-Camp with scalable social venture model.',
-    },
-    {
-      title: 'Metropolitan University National MUN 2025',
-      badge: 'Special Mention II',
-      category: 'DIPLOMACY & MULTILATERAL NEGOTIATION',
-      organizer: 'Metropolitan University Model United Nations',
+      title: 'CaseCation Season 2 Grand Finale Stage Recognition',
+      badge: 'Production Wing Head Award',
+      category: 'NATIONAL BUSINESS CASE COMPETITION',
+      organizer: 'Rajshahi University Business Club (RUBC)',
       year: '2025',
-      image: '/src/assets/images/hult_team_ru_1789908395387.jpg',
-      description: 'Recognized for distinguished diplomatic negotiation, policy drafting, and committee leadership.',
+      image: '/images/casecation_award.jpg',
+      description: 'Formal stage felicitation for leading a 15-member creative squad and producing 450+ branding assets across 20+ universities.',
     },
     {
-      title: 'Ignite 3.0 Article Writing Competition',
-      badge: 'Champion',
-      category: 'BUSINESS WRITING & THOUGHT LEADERSHIP',
+      title: 'ImaGen Ventures Youth Challenge 2024-25 Finalist',
+      badge: 'National Finalist & Boot-Camp',
+      category: 'UNICEF & GENERATION UNLIMITED',
+      organizer: 'UNICEF, Generation Unlimited & JAAGO Foundation',
+      year: '2024–2025',
+      image: '/images/cert_unicef_imagen.jpg',
+      description: 'Awarded finalist certificate for architecting a scalable youth-driven social venture model during the Mymensingh regional boot-camp.',
+    },
+    {
+      title: 'Ignite 3.0 Article Writing Championship (1st Place)',
+      badge: 'Champion (1st Place)',
+      category: 'STRATEGIC WRITING & ANALYSIS',
       organizer: 'Rajshahi University Business Club (RUBC)',
       year: '2024',
-      image: '/src/assets/images/jamil_portrait_1789908349117.jpg',
-      description: 'Awarded 1st place for analytical depth and persuasive writing on strategic business challenges.',
+      image: '/images/ignite_champion_award.jpg',
+      description: 'Clinched first place for authoritative analysis of macroeconomic transitions and youth enterprise viability.',
     },
     {
-      title: 'Inter Department Basketball Tournament',
-      badge: 'Runners-Up',
-      category: 'UNIVERSITY SPORTS CHAMPIONSHIP',
-      organizer: 'University of Rajshahi Sports Board',
-      year: '2023',
-      image: '/src/assets/images/pathchinhno_social_1789908415513.jpg',
-      description: 'Represented Department of Public Administration as a starter and team coordinator.',
+      title: 'Hult Prize at University of Rajshahi Organizing Team',
+      badge: 'Deputy Campus Director',
+      category: 'GLOBAL SOCIAL ENTREPRENEURSHIP',
+      organizer: 'Hult Prize Global Foundation',
+      year: '2025',
+      image: '/images/hult_team_ru.jpg',
+      description: 'Mobilized 750+ student teams to submit social ventures and led a 50+ member organizing committee across campus.',
+    },
+    {
+      title: 'Rajshahi University Business Club Executive Board',
+      badge: 'Vice President',
+      category: 'EXECUTIVE LEADERSHIP & HR GOVERNANCE',
+      organizer: 'RUBC Executive Committee 2026-27',
+      year: '2026',
+      image: '/images/jamil_profile_official.jpg',
+      description: 'Directing strategic HR governance, member talent development, and organizational operations for a 200+ member community.',
+    },
+    {
+      title: 'Project Pathochinhno Environmental & Youth Action',
+      badge: 'Founder & Lead Coordinator',
+      category: 'SUSTAINABILITY & UN SDGS',
+      organizer: 'Youth Social Impact Umbrella',
+      year: '2025–Present',
+      image: '/images/pathchinhno_social.jpg',
+      description: 'Planted 170+ native trees and conducted the Mission BluePulse Padma riverbank conservation drive with 40+ youth volunteers.',
     },
   ];
 
@@ -134,9 +152,9 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({ onNavi
           ))}
         </div>
 
-        {/* 4 Podium Cards */}
+        {/* 6 Podium Cards */}
         <div className="mb-10 sm:mb-14">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {podiumCards.map((item, idx) => (
               <div key={idx} className="flex flex-col gap-3 sm:gap-4 group/podium">
                 {/* Photo container */}

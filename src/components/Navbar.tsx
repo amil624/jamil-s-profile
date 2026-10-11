@@ -37,35 +37,44 @@ export const Navbar: React.FC<NavbarProps> = ({
     };
   }, [mobileMenuOpen]);
 
-  const navItems = [
-    { label: 'About', path: '#about' },
-    { label: 'Experience', path: '#experience' },
-    { label: 'Projects', path: '#portfolio' },
+  interface NavItem {
+    label: string;
+    sectionId?: string;
+    path?: string;
+  }
+
+  const navItems: NavItem[] = [
+    { label: 'About', sectionId: 'about' },
+    { label: 'Experience', sectionId: 'experience' },
+    { label: 'Projects', sectionId: 'portfolio' },
     { label: 'Achievements', path: '/achievements' },
     { label: 'Certifications', path: '/certifications' },
   ];
 
-  const handleItemClick = (e: React.MouseEvent, path: string) => {
+  const handleItemClick = (
+    e: React.MouseEvent,
+    target: { sectionId?: string; path?: string }
+  ) => {
     e.preventDefault();
     setMobileMenuOpen(false);
 
-    if (path.startsWith('#')) {
+    if (target.sectionId) {
       if (currentPath !== '/') {
         onNavigate('/');
         setTimeout(() => {
-          const el = document.querySelector(path);
+          const el = document.getElementById(target.sectionId!);
           if (el) {
             el.scrollIntoView({ behavior: 'smooth' });
           }
         }, 100);
       } else {
-        const el = document.querySelector(path);
+        const el = document.getElementById(target.sectionId);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth' });
         }
       }
-    } else {
-      onNavigate(path);
+    } else if (target.path) {
+      onNavigate(target.path);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -81,15 +90,27 @@ export const Navbar: React.FC<NavbarProps> = ({
     >
       <div className="max-w-[1536px] mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between">
-          {/* Left Brand Identity: Initial Avatar + Name + Tagline */}
+          {/* Left Brand Identity: Official Profile Avatar + Name + Tagline */}
           <a
             href="/"
-            onClick={(e) => handleItemClick(e, '/')}
+            onClick={(e) => handleItemClick(e, { path: '/' })}
             id="nav-logo"
             className="group flex items-center gap-2.5 sm:gap-3 text-left"
           >
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-[#00C4CC]/30 bg-[#0A1F4D]/50 flex items-center justify-center font-display font-black text-xs sm:text-sm text-[#00D1FF] shadow-[0_0_15px_rgba(0,209,255,0.25)] group-hover:border-[#00D1FF]/60 transition-all">
-              JK
+            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden border border-[#00C4CC]/40 bg-[#0A1F4D]/60 shadow-[0_0_15px_rgba(0,209,255,0.3)] group-hover:border-[#00D1FF] transition-all shrink-0">
+              <img
+                src="/images/jamil_profile_official.jpg"
+                alt="Md. Jamil Hosen Khandakar"
+                className="w-full h-full object-cover object-top"
+                onError={(e) => {
+                  const target = e.currentTarget as HTMLImageElement;
+                  if (!target.dataset.triedFallback) {
+                    target.dataset.triedFallback = 'true';
+                    target.src = 'https://ik.imagekit.io/Jamils/Jamil%20Hosen%20Khandakar.%20Jpg%20(1).heif?tr=f-auto,w-100,h-100';
+                  }
+                }}
+              />
+              <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/10 pointer-events-none" />
             </div>
             <div className="flex flex-col text-left">
               <span className="font-display font-bold text-sm sm:text-base leading-tight text-[#F8FAFC] tracking-tight group-hover:text-[#00D1FF] transition-colors">
@@ -107,16 +128,15 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center gap-3 sm:gap-6 md:gap-8">
             <nav className="hidden md:flex items-center gap-6" id="desktop-nav">
               {navItems.map((item) => {
-                const isAnchor = item.path.startsWith('#');
-                const isActive = isAnchor
-                  ? currentPath === '/' && activeSection === item.path.replace('#', '')
+                const isActive = item.sectionId
+                  ? currentPath === '/' && activeSection === item.sectionId
                   : currentPath === item.path;
 
                 return (
                   <a
                     key={item.label}
-                    href={item.path}
-                    onClick={(e) => handleItemClick(e, item.path)}
+                    href={item.path || '/'}
+                    onClick={(e) => handleItemClick(e, item)}
                     id={`nav-link-${item.label.toLowerCase()}`}
                     className={`relative hover:text-[#00D1FF] transition-all duration-200 text-[13px] font-bold tracking-wider uppercase py-1 ${
                       isActive
@@ -139,10 +159,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {/* Let's Talk CTA Button (Visible on all screens) */}
             <a
-              href="#contact"
-              onClick={(e) => handleItemClick(e, '#contact')}
+              href="/"
+              onClick={(e) => handleItemClick(e, { sectionId: 'contact' })}
               id="nav-cta-contact"
-              className="px-4 sm:px-6 py-2 sm:py-2.5 bg-gradient-to-r from-[#2563EB] via-[#06B6D4] to-[#34D399] text-[#F8FAFC] rounded-full text-xs font-bold tracking-wide shadow-[0_4px_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_20px_rgba(37,99,235,0.6)] hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 sm:gap-2 shrink-0"
+              className="px-4 sm:px-6 py-2 sm:py-2.5 bg-gradient-to-r from-[#2563EB] via-[#06B6D4] to-[#34D399] text-[#F8FAFC] rounded-full text-xs font-bold tracking-wide shadow-[0_4px_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_20px_rgba(37,99,235,0.6)] hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 sm:gap-2 shrink-0 cursor-pointer"
             >
               <span>Let's Talk</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -187,17 +207,16 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <div className="flex flex-col gap-1.5">
                 {navItems.map((item) => {
-                  const isAnchor = item.path.startsWith('#');
-                  const isActive = isAnchor
-                    ? currentPath === '/' && activeSection === item.path.replace('#', '')
+                  const isActive = item.sectionId
+                    ? currentPath === '/' && activeSection === item.sectionId
                     : currentPath === item.path;
 
                   return (
                     <a
                       key={item.label}
-                      href={item.path}
-                      onClick={(e) => handleItemClick(e, item.path)}
-                      className={`px-4 py-3 rounded-xl text-sm font-bold tracking-wide transition-all flex items-center justify-between min-h-[44px] ${
+                      href={item.path || '/'}
+                      onClick={(e) => handleItemClick(e, item)}
+                      className={`px-4 py-3 rounded-xl text-sm font-bold tracking-wide transition-all flex items-center justify-between min-h-[44px] cursor-pointer ${
                         isActive
                           ? 'bg-[#0A1F4D] text-[#00D1FF] border border-[#00D1FF]/40 shadow-[0_0_15px_rgba(0,209,255,0.15)]'
                           : 'text-[#CBD5E1] hover:text-white hover:bg-white/5 active:bg-white/10'
@@ -214,9 +233,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               <div className="pt-2 border-t border-[#3B82F6]/15 flex flex-col gap-2">
                 <a
-                  href="#contact"
-                  onClick={(e) => handleItemClick(e, '#contact')}
-                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#2563EB] via-[#06B6D4] to-[#34D399] text-[#F8FAFC] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#2563EB]/30 min-h-[44px] active:scale-[0.98] transition-transform"
+                  href="/"
+                  onClick={(e) => handleItemClick(e, { sectionId: 'contact' })}
+                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#2563EB] via-[#06B6D4] to-[#34D399] text-[#F8FAFC] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#2563EB]/30 min-h-[44px] active:scale-[0.98] transition-transform cursor-pointer"
                 >
                   <span>Let's Talk</span>
                   <ArrowUpRight className="w-4 h-4" />

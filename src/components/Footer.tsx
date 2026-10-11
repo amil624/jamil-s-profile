@@ -14,25 +14,31 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const navLinks = [
-    { label: 'About', path: '#about' },
-    { label: 'Experience', path: '#experience' },
-    { label: 'Projects', path: '#portfolio' },
+  interface FooterNavLink {
+    label: string;
+    sectionId?: string;
+    path?: string;
+  }
+
+  const navLinks: FooterNavLink[] = [
+    { label: 'About', sectionId: 'about' },
+    { label: 'Experience', sectionId: 'experience' },
+    { label: 'Projects', sectionId: 'portfolio' },
     { label: 'Achievements', path: '/achievements' },
     { label: 'Certifications', path: '/certifications' },
-    { label: 'Contact', path: '#contact' },
+    { label: 'Contact', sectionId: 'contact' },
   ];
 
-  const handleLinkClick = (e: React.MouseEvent, path: string) => {
+  const handleLinkClick = (e: React.MouseEvent, item: FooterNavLink) => {
     e.preventDefault();
-    if (path.startsWith('#')) {
+    if (item.sectionId) {
       onNavigate('/');
       setTimeout(() => {
-        const el = document.querySelector(path);
+        const el = document.getElementById(item.sectionId!);
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       }, 50);
-    } else {
-      onNavigate(path);
+    } else if (item.path) {
+      onNavigate(item.path);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -45,8 +51,20 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           
           {/* Brand Left */}
           <div className="md:col-span-6 flex items-center gap-4">
-            <div className="w-11 h-11 rounded-xl border border-[#00C4CC]/30 bg-[#0A1F4D]/50 flex items-center justify-center font-display font-black text-sm text-[#00D1FF] shadow-[0_0_15px_rgba(0,209,255,0.25)] shrink-0">
-              JK
+            <div className="relative w-11 h-11 rounded-xl overflow-hidden border border-[#00C4CC]/40 bg-[#0A1F4D]/60 shadow-[0_0_15px_rgba(0,209,255,0.3)] shrink-0">
+              <img
+                src="/images/jamil_profile_official.jpg"
+                alt="Md. Jamil Hosen Khandakar"
+                className="w-full h-full object-cover object-top"
+                onError={(e) => {
+                  const target = e.currentTarget as HTMLImageElement;
+                  if (!target.dataset.triedFallback) {
+                    target.dataset.triedFallback = 'true';
+                    target.src = 'https://ik.imagekit.io/Jamils/Jamil%20Hosen%20Khandakar.%20Jpg%20(1).heif?tr=f-auto,w-120,h-120';
+                  }
+                }}
+              />
+              <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/10 pointer-events-none" />
             </div>
             <div>
               <span className="font-display font-bold text-base text-[#F8FAFC] block">
@@ -63,9 +81,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             {navLinks.map((item) => (
               <a
                 key={item.label}
-                href={item.path}
-                onClick={(e) => handleLinkClick(e, item.path)}
-                className="text-xs font-semibold text-[#CBD5E1] hover:text-[#00D1FF] uppercase tracking-wider transition-colors"
+                href={item.path || '/'}
+                onClick={(e) => handleLinkClick(e, item)}
+                className="text-xs font-semibold text-[#CBD5E1] hover:text-[#00D1FF] uppercase tracking-wider transition-colors cursor-pointer"
               >
                 {item.label}
               </a>

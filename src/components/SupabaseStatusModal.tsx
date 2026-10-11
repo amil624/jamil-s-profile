@@ -11,8 +11,17 @@ import {
   Code2,
   Table,
   ShieldCheck,
+  Image,
+  UploadCloud,
 } from 'lucide-react';
-import { testSupabaseConnection, SUPABASE_SQL_SETUP } from '../lib/supabase';
+import {
+  testSupabaseConnection,
+  SUPABASE_SQL_SETUP,
+  GIVEN_IMAGES,
+  storePortfolioImages,
+  fetchPortfolioImages,
+  PortfolioImage,
+} from '../lib/supabase';
 
 interface SupabaseStatusModalProps {
   isOpen: boolean;
@@ -29,6 +38,12 @@ export const SupabaseStatusModal: React.FC<SupabaseStatusModalProps> = ({
     message: string;
   } | null>(null);
   const [copiedSql, setCopiedSql] = useState(false);
+  const [syncingImages, setSyncingImages] = useState(false);
+  const [imageSyncResult, setImageSyncResult] = useState<{
+    success?: boolean;
+    message?: string;
+  } | null>(null);
+  const [currentImages, setCurrentImages] = useState<PortfolioImage[]>(GIVEN_IMAGES);
 
   const checkConnection = async () => {
     setChecking(true);
@@ -37,11 +52,40 @@ export const SupabaseStatusModal: React.FC<SupabaseStatusModalProps> = ({
     setChecking(false);
   };
 
+  const loadImages = async () => {
+    const imgs = await fetchPortfolioImages();
+    if (imgs && imgs.length > 0) {
+      setCurrentImages(imgs);
+    }
+  };
+
   useEffect(() => {
     if (isOpen) {
       checkConnection();
+      loadImages();
     }
   }, [isOpen]);
+
+  const handleSyncImages = async () => {
+    setSyncingImages(true);
+    setImageSyncResult(null);
+    const res = await storePortfolioImages(GIVEN_IMAGES);
+    if (res.success) {
+      setImageSyncResult({
+        success: true,
+        message: `Successfully synced & stored ${res.count || 4} authentic images in Supabase database!`,
+      });
+      await loadImages();
+    } else {
+      setImageSyncResult({
+        success: false,
+        message:
+          res.error ||
+          'Failed to store in table. If you haven\'t run the SQL snippet in Supabase SQL editor yet, copy the SQL below and execute it.',
+      });
+    }
+    setSyncingImages(false);
+  };
 
   const handleCopySql = () => {
     navigator.clipboard.writeText(SUPABASE_SQL_SETUP);
@@ -121,26 +165,97 @@ export const SupabaseStatusModal: React.FC<SupabaseStatusModalProps> = ({
               <Table className="w-3.5 h-3.5 text-[#00D1FF]" />
               Database Tables Integrated
             </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="p-3.5 rounded-xl bg-[#081733]/60 border border-white/10">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="font-mono text-xs font-bold text-[#F59E0B]">portfolio_images</span>
+                  <span className="text-[10px] text-[#3ECF8E] font-semibold">4 Assets</span>
+                </div>
+                <p className="text-xs text-slate-400">
+                  Stores given images, captions, categories, and aspect ratios.
+                </p>
+              </div>
+
               <div className="p-3.5 rounded-xl bg-[#081733]/60 border border-white/10">
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="font-mono text-xs font-bold text-[#00D1FF]">contact_messages</span>
-                  <span className="text-[10px] text-[#3ECF8E] font-semibold">Live in Contact Form</span>
+                  <span className="text-[10px] text-[#3ECF8E] font-semibold">Live Form</span>
                 </div>
                 <p className="text-xs text-slate-400">
-                  Stores visitor and recruiter inquiries (name, email, subject, message, created_at).
+                  Stores visitor and recruiter inquiries with timestamps.
                 </p>
               </div>
 
               <div className="p-3.5 rounded-xl bg-[#081733]/60 border border-white/10">
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="font-mono text-xs font-bold text-[#34D399]">endorsements</span>
-                  <span className="text-[10px] text-[#34D399] font-semibold">Interactive Feed</span>
+                  <span className="text-[10px] text-[#34D399] font-semibold">Live Feed</span>
                 </div>
                 <p className="text-xs text-slate-400">
-                  Stores live recommendations and peer endorsements with star ratings.
+                  Stores recommendations and peer reviews with star ratings.
                 </p>
               </div>
+            </div>
+          </div>
+
+          {/* Given Images Stored in Database */}
+          <div className="p-4 rounded-xl bg-[#081733]/80 border border-white/10 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Image className="w-4 h-4 text-[#F59E0B]" />
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">
+                  Given Authentic Images (Stored in Database)
+                </h4>
+              </div>
+              <button
+                onClick={handleSyncImages}
+                disabled={syncingImages}
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium bg-[#3ECF8E]/20 text-[#3ECF8E] border border-[#3ECF8E]/30 hover:bg-[#3ECF8E]/30 transition-all disabled:opacity-50"
+              >
+                <UploadCloud className={`w-3.5 h-3.5 ${syncingImages ? 'animate-bounce' : ''}`} />
+                <span>{syncingImages ? 'Storing in DB...' : 'Sync to Supabase'}</span>
+              </button>
+            </div>
+
+            {imageSyncResult && (
+              <div
+                className={`p-2.5 rounded-lg text-xs flex items-center gap-2 ${
+                  imageSyncResult.success
+                    ? 'bg-[#3ECF8E]/15 border border-[#3ECF8E]/30 text-[#3ECF8E]'
+                    : 'bg-amber-500/15 border border-amber-500/30 text-amber-200'
+                }`}
+              >
+                {imageSyncResult.success ? (
+                  <CheckCircle2 className="w-4 h-4 shrink-0" />
+                ) : (
+                  <ShieldCheck className="w-4 h-4 shrink-0" />
+                )}
+                <span>{imageSyncResult.message}</span>
+              </div>
+            )}
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+              {currentImages.map((img) => (
+                <div
+                  key={img.id}
+                  className="rounded-lg overflow-hidden border border-white/10 bg-[#040D1E] group relative"
+                >
+                  <div className="aspect-[4/3] w-full overflow-hidden bg-black/40">
+                    <img
+                      src={img.image_url}
+                      alt={img.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                    />
+                  </div>
+                  <div className="p-2">
+                    <p className="text-[10px] font-bold text-white truncate">{img.title}</p>
+                    <p className="text-[9px] text-[#00D1FF] truncate font-mono">id: {img.id}</p>
+                    <span className="inline-block mt-1 text-[8px] px-1.5 py-0.5 rounded bg-[#3ECF8E]/20 text-[#3ECF8E] border border-[#3ECF8E]/30 font-semibold">
+                      Stored
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -178,7 +293,7 @@ export const SupabaseStatusModal: React.FC<SupabaseStatusModalProps> = ({
               >
                 Supabase SQL Editor <ExternalLink className="w-2.5 h-2.5" />
               </a>{' '}
-              if you haven't created the tables yet. Public insert policies are already included.
+              to initialize the tables and Row Level Security policies.
             </p>
             <div className="relative rounded-xl bg-[#020611] border border-white/10 p-3.5 font-mono text-xs text-slate-300 overflow-x-auto max-h-48 leading-relaxed">
               <pre>{SUPABASE_SQL_SETUP}</pre>
@@ -189,7 +304,7 @@ export const SupabaseStatusModal: React.FC<SupabaseStatusModalProps> = ({
           <div className="p-3 rounded-xl bg-[#0D244D]/30 border border-[#3B82F6]/20 flex items-start gap-2.5 text-xs text-slate-300">
             <ShieldCheck className="w-4 h-4 text-[#3ECF8E] shrink-0 mt-0.5" />
             <span>
-              Configured with Row Level Security (RLS) best practices. Public inserts allow portfolio visitors to submit messages and endorsements without requiring authentication.
+              Configured with Row Level Security (RLS) best practices. Public inserts allow portfolio visitors to submit messages and endorsements, and portfolio images are publicly readable and editable.
             </span>
           </div>
         </div>

@@ -134,14 +134,21 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCv, onNavigateToProject }) => 
 
           {/* CTA Buttons: "View My Work" & "Download Resume" */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
-            <a
-              href="#portfolio"
+            <button
+              onClick={() => {
+                if (onNavigateToProject) {
+                  onNavigateToProject('portfolio');
+                } else {
+                  const el = document.getElementById('portfolio');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
               id="hero-view-work-btn"
-              className="px-6 sm:px-7 py-3.5 sm:py-4 bg-gradient-to-r from-[#00D1FF] to-[#3B82F6] text-[#F8FAFC] rounded-xl text-xs font-bold tracking-wider uppercase hover:shadow-[0_0_25px_rgba(0,209,255,0.5)] transition-all flex items-center justify-center gap-2.5 group hover:scale-[1.02] active:scale-[0.98] border border-[#00D1FF]/30 min-h-[44px]"
+              className="px-6 sm:px-7 py-3.5 sm:py-4 bg-gradient-to-r from-[#00D1FF] to-[#3B82F6] text-[#F8FAFC] rounded-xl text-xs font-bold tracking-wider uppercase hover:shadow-[0_0_25px_rgba(0,209,255,0.5)] transition-all flex items-center justify-center gap-2.5 group hover:scale-[1.02] active:scale-[0.98] border border-[#00D1FF]/30 min-h-[44px] cursor-pointer"
             >
               <span>View My Work</span>
               <ArrowRight className="w-4 h-4 text-current group-hover:translate-x-1 transition-transform" />
-            </a>
+            </button>
 
             <button
               onClick={onOpenCv}
@@ -156,18 +163,33 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCv, onNavigateToProject }) => 
 
         {/* Center Column: Portrait Image with Circular Glowing Ring Backdrop */}
         <div className="col-span-12 lg:col-span-4 xl:col-span-4 flex flex-col justify-end items-center relative z-10 mt-6 lg:mt-0 pointer-events-none self-end">
-          <div className="relative inline-block w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[380px] lg:max-w-full xl:max-w-[460px] transition-all pointer-events-auto">
+          <div className="relative inline-block w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[380px] lg:max-w-full xl:max-w-[460px] transition-all pointer-events-auto group">
             
             {/* Pulsating Glowing Ring Backdrop */}
-            <div className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] xs:w-[280px] sm:w-[340px] lg:w-[360px] xl:w-[440px] h-[250px] xs:h-[280px] sm:h-[340px] lg:h-[360px] xl:h-[440px] rounded-full border border-[#3B82F6]/20 bg-[#0A1F4D]/10 backdrop-blur-sm shadow-[0_0_60px_rgba(37,99,235,0.18),inset_0_0_30px_rgba(6,182,212,0.15)] -z-10 animate-[pulse_6s_infinite_alternate]" />
+            <div className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] xs:w-[280px] sm:w-[340px] lg:w-[360px] xl:w-[440px] h-[250px] xs:h-[280px] sm:h-[340px] lg:h-[360px] xl:h-[440px] rounded-full border border-[#3B82F6]/30 bg-[#0A1F4D]/15 backdrop-blur-sm shadow-[0_0_70px_rgba(37,99,235,0.25),inset_0_0_35px_rgba(6,182,212,0.2)] -z-10 animate-[pulse_6s_infinite_alternate]" />
             
-            {/* Portrait Image */}
+            {/* Official Portrait Image */}
             <img
-              src="/src/assets/images/jamil_portrait_1789908349117.jpg"
-              alt="Md. Jamil Hosen Khandakar Portrait"
-              className="relative z-10 w-full object-contain object-bottom filter drop-shadow-[0_20px_45px_rgba(0,0,0,0.85)] max-h-[300px] xs:max-h-[340px] sm:max-h-[400px] lg:max-h-[calc(100vh-140px)] xl:max-h-[660px] rounded-2xl mx-auto"
+              src="/images/jamil_profile_official.jpg"
+              alt="Md. Jamil Hosen Khandakar Official Portrait"
+              className="relative z-10 w-full object-contain object-bottom filter drop-shadow-[0_20px_45px_rgba(0,0,0,0.85)] max-h-[340px] xs:max-h-[380px] sm:max-h-[440px] lg:max-h-[calc(100vh-140px)] xl:max-h-[660px] rounded-2xl mx-auto transition-transform duration-500 group-hover:scale-[1.01]"
               referrerPolicy="no-referrer"
+              onError={(e) => {
+                const target = e.currentTarget as HTMLImageElement;
+                if (!target.dataset.triedFallback) {
+                  target.dataset.triedFallback = 'true';
+                  target.src = 'https://ik.imagekit.io/Jamils/Jamil%20Hosen%20Khandakar.%20Jpg%20(1).heif?tr=f-auto';
+                }
+              }}
             />
+
+            {/* Floating Executive Status Pill */}
+            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-30 px-3.5 py-1.5 rounded-full bg-[#030B14]/90 border border-[#00C4CC]/40 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.6)] flex items-center gap-2 whitespace-nowrap">
+              <span className="w-2 h-2 rounded-full bg-[#34D399] shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse" />
+              <span className="text-[11px] font-semibold text-[#F8FAFC] tracking-wide">
+                Md. Jamil Hosen Khandakar
+              </span>
+            </div>
           </div>
 
           {/* Smooth bottom gradient fade into page background */}
@@ -283,13 +305,20 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCv, onNavigateToProject }) => 
 
             {/* Jump to Project link & Pagination Dots */}
             <div className="pt-3.5 mt-3 border-t border-[#3B82F6]/15 flex items-center justify-between">
-              <a
-                href="#portfolio"
-                className="text-xs font-bold text-[#00D1FF] hover:text-[#34D399] transition-colors flex items-center gap-1.5 group/link py-1"
+              <button
+                onClick={() => {
+                  if (onNavigateToProject) {
+                    onNavigateToProject('portfolio');
+                  } else {
+                    const el = document.getElementById('portfolio');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="text-xs font-bold text-[#00D1FF] hover:text-[#34D399] transition-colors flex items-center gap-1.5 group/link py-1 cursor-pointer"
               >
                 <span>Explore Project</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
-              </a>
+              </button>
 
               {/* Direct Jump Dots */}
               <div className="flex items-center gap-1.5">

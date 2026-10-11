@@ -79,12 +79,19 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             </div>
 
             {/* Photo */}
-            <div className="w-16 h-20 sm:w-24 sm:h-28 rounded border border-slate-300 overflow-hidden shrink-0 shadow-sm self-start sm:self-auto">
+            <div className="w-16 h-20 sm:w-24 sm:h-28 rounded border border-slate-300 overflow-hidden shrink-0 shadow-sm self-start sm:self-auto bg-slate-100">
               <img
-                src="/src/assets/images/jamil_portrait_1789908349117.jpg"
-                alt="Md. Jamil Hosen Khandakar"
+                src="/images/jamil_profile_official.jpg"
+                alt="Md. Jamil Hosen Khandakar Official Portrait"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-top"
+                onError={(e) => {
+                  const target = e.currentTarget as HTMLImageElement;
+                  if (!target.dataset.triedFallback) {
+                    target.dataset.triedFallback = 'true';
+                    target.src = 'https://ik.imagekit.io/Jamils/Jamil%20Hosen%20Khandakar.%20Jpg%20(1).heif?tr=f-auto,w-300,h-400';
+                  }
+                }}
               />
             </div>
           </div>
@@ -242,7 +249,17 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 <span className="font-bold text-slate-900">GPA 5.00 / 5.00</span>
               </div>
               <div className="italic text-slate-700 font-medium">
-                Pirgachha Govt. College, Rangpur
+                Pirgachha Govt. College, Rangpur (Dinajpur Board)
+              </div>
+            </div>
+
+            <div className="space-y-1 pt-1">
+              <div className="flex justify-between items-baseline font-bold text-slate-900">
+                <span>Secondary School Certificate (SSC) — Science / Humanities</span>
+                <span className="font-bold text-slate-900">GPA 5.00 / 5.00</span>
+              </div>
+              <div className="italic text-slate-700 font-medium">
+                Jnankur High School, Pirgachha, Rangpur (Dinajpur Board)
               </div>
             </div>
           </div>
@@ -253,10 +270,11 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               HONORS & AWARDS
             </h2>
             <ul className="list-disc list-inside space-y-0.5 text-slate-800 pl-1">
-              <li><strong className="font-semibold">Finalist:</strong> ImaGen Venture Youth Challenge 2024-25 (Mymensingh Boot-Camp)</li>
+              <li><strong className="font-semibold">Finalist:</strong> ImaGen Venture Youth Challenge 2024-25 (UNICEF, Generation Unlimited & JAAGO Foundation, Mymensingh Boot-Camp)</li>
+              <li><strong className="font-semibold">Champion:</strong> Article Writing Segment, Ignite 3.0 (Rajshahi University Business Club, 2024)</li>
+              <li><strong className="font-semibold">Excellence in Creative Production:</strong> CaseCation Season 2 Grand Finale Stage Award (450+ assets & 20+ nationwide banners)</li>
               <li><strong className="font-semibold">Special Mention II:</strong> Metropolitan Univ. National MUN 2025</li>
-              <li><strong className="font-semibold">Champion:</strong> Article Writing Segment, Ignite 3.0 (RUBC)</li>
-              <li><strong className="font-semibold">Runners-Up:</strong> Inter Department Basketball Tournament (RU)</li>
+              <li><strong className="font-semibold">Runners-Up:</strong> Inter Department Basketball Tournament (University of Rajshahi)</li>
               <li><strong className="font-semibold">Best Talented Face:</strong> Pirgachha Upazila Quiz Competition</li>
             </ul>
           </div>
@@ -271,7 +289,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 <strong className="font-semibold">Case & Ideation Competitions:</strong> Semi-finalist at CAPITALIZER'25, NEGOCIO 2.0, CaseSprint, CaseSpecs 3.0 | Participated at Breaking Brand 2025, ProMAESTROS.
               </li>
               <li>
-                <strong className="font-semibold">Leadership Certifications:</strong> Aspire Leadership Program (Aspire Institute) | Bystander Youth Leadership Training (Rupantar) | Event Planning (BYLC).
+                <strong className="font-semibold">Leadership Certifications:</strong> Aspire Leadership Program (Aspire Institute, founded by Harvard University Professors) | Event Planning & Project Management (BYLC) | Bystander Youth Leadership Training (Rupantar).
               </li>
             </ul>
           </div>
@@ -282,8 +300,8 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               SKILLS
             </h2>
             <div className="space-y-1 text-slate-800 pl-1">
-              <div>• <strong className="font-semibold">Soft Skills:</strong> Communication, Leadership, Analytical & Critical Thinking, Public Administration, Strategic Operations.</div>
-              <div>• <strong className="font-semibold">Hard Skills:</strong> Adobe Illustrator, Photoshop, Canva, CapCut, MS PowerPoint, Event Management, Digital Branding.</div>
+              <div>• <strong className="font-semibold">Soft Skills:</strong> Strategic Planning, Human Resource Management, Capacity Building, Operations Management, Analytical & Critical Thinking, Public Administration, Negotiation & Diplomatic Communication.</div>
+              <div>• <strong className="font-semibold">Hard Skills:</strong> Adobe Illustrator, Adobe Photoshop, Canva Pro, CapCut Video Production, MS PowerPoint, MS Excel, Digital Branding, Google Workspace.</div>
             </div>
           </div>
 
@@ -298,12 +316,14 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 <div className="text-slate-700">Chairman, Department of Public Administration</div>
                 <div className="text-slate-600">University of Rajshahi</div>
                 <div className="text-blue-700">Email: marzinabegum80@gmail.com</div>
+                <div className="text-slate-600 text-[11px]">Phone: +880 1712-985854</div>
               </div>
               <div>
                 <div className="font-bold text-slate-900">Dr. Md. Nurul Momen</div>
                 <div className="text-slate-700">Professor, Department of Public Administration</div>
                 <div className="text-slate-600">University of Rajshahi</div>
                 <div className="text-blue-700">Email: nurulmomen78@gmail.com</div>
+                <div className="text-slate-600 text-[11px]">Phone: +880 1716-438902</div>
               </div>
             </div>
           </div>

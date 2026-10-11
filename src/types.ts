@@ -61,6 +61,7 @@ export interface AwardItem {
   year: string;
   description?: string;
   featured?: boolean;
+  image?: string;
 }
 
 export interface CompetitionItem {
@@ -74,6 +75,7 @@ export interface CertificationItem {
   title: string;
   issuer: string;
   year?: string;
+  image?: string;
 }
 
 export interface SkillCategory {
@@ -96,4 +98,5 @@ export interface AcademicReference {
   department: string;
   institution: string;
   email: string;
+  phone?: string;
 }

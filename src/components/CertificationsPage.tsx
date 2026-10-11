@@ -1,5 +1,5 @@
-import React from 'react';
-import { ArrowLeft, Award, CheckCircle2, Calendar, Building, ExternalLink, ShieldCheck } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowLeft, Award, CheckCircle2, Calendar, Building, ExternalLink, ShieldCheck, Eye, X, ZoomIn } from 'lucide-react';
 import { certificationsList } from '../data/portfolioData';
 
 interface CertificationsPageProps {
@@ -7,6 +7,8 @@ interface CertificationsPageProps {
 }
 
 export const CertificationsPage: React.FC<CertificationsPageProps> = ({ onNavigate }) => {
+  const [activeCertModal, setActiveCertModal] = useState<{ title: string; image: string; issuer: string } | null>(null);
+
   return (
     <section
       id="certifications-page"
@@ -40,7 +42,7 @@ export const CertificationsPage: React.FC<CertificationsPageProps> = ({ onNaviga
           Certifications &amp; Accreditations
         </h1>
         <p className="text-[#CBD5E1] text-sm sm:text-base md:text-lg lg:text-xl font-light leading-relaxed">
-          Structured leadership development courses, innovation bootcamps, and certified management competencies.
+          Structured leadership development courses, innovation bootcamps, and certified management competencies with verified certificates.
         </p>
       </div>
 
@@ -52,6 +54,31 @@ export const CertificationsPage: React.FC<CertificationsPageProps> = ({ onNaviga
             className="p-5 sm:p-7 rounded-[1.75rem] sm:rounded-[2rem] border border-[#3B82F6]/20 bg-[#050B18]/90 backdrop-blur-xl shadow-2xl flex flex-col justify-between hover:border-[#34D399]/40 hover:scale-[1.01] transition-all group"
           >
             <div>
+              {/* Optional Certificate Visual Image Card */}
+              {cert.image && (
+                <div
+                  onClick={() => setActiveCertModal({ title: cert.title, image: cert.image!, issuer: cert.issuer })}
+                  className="mb-4 relative rounded-xl overflow-hidden border border-white/10 bg-[#030B14] cursor-pointer group/certimg aspect-[4/3] shadow-lg"
+                >
+                  <img
+                    src={cert.image}
+                    alt={`${cert.title} Certificate`}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover/certimg:scale-105"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover/certimg:opacity-40 transition-opacity" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/certimg:opacity-100 transition-opacity bg-black/40 backdrop-blur-xs">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/90 text-white text-xs font-semibold border border-white/30 shadow-xl">
+                      <ZoomIn className="w-3.5 h-3.5 text-[#34D399]" />
+                      <span>View Certificate</span>
+                    </span>
+                  </div>
+                  <span className="absolute bottom-2 left-2 text-[10px] font-bold text-white/90 bg-slate-950/80 px-2 py-0.5 rounded border border-white/10 backdrop-blur-sm">
+                    Verified Credential
+                  </span>
+                </div>
+              )}
+
               <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4">
                 <span className="text-[10px] font-bold text-[#34D399] uppercase tracking-wider">
                   {cert.type}
@@ -86,6 +113,45 @@ export const CertificationsPage: React.FC<CertificationsPageProps> = ({ onNaviga
           </div>
         ))}
       </div>
+
+      {/* Certificate Modal Lightbox */}
+      {activeCertModal && (
+        <div
+          onClick={() => setActiveCertModal(null)}
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-4xl w-full bg-[#050B18] border border-white/20 rounded-2xl overflow-hidden shadow-2xl"
+          >
+            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-slate-900/80">
+              <div>
+                <h3 className="text-sm sm:text-base font-bold text-white">
+                  {activeCertModal.title}
+                </h3>
+                <p className="text-xs text-[#34D399]">
+                  {activeCertModal.issuer}
+                </p>
+              </div>
+              <button
+                onClick={() => setActiveCertModal(null)}
+                className="p-1.5 rounded-lg bg-white/10 text-slate-300 hover:text-white hover:bg-white/20 transition-colors"
+                aria-label="Close Certificate Preview"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-2 sm:p-4 bg-black/50 flex items-center justify-center max-h-[80vh] overflow-auto">
+              <img
+                src={activeCertModal.image}
+                alt={activeCertModal.title}
+                className="max-h-[75vh] w-auto object-contain rounded-lg shadow-2xl border border-white/10"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
