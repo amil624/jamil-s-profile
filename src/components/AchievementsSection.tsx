@@ -1,5 +1,6 @@
 import React from 'react';
 import { Trophy, ArrowRight, Award, Flame, Users, Layers, Trees } from 'lucide-react';
+import { AuthenticCardMedia } from './AuthenticCardMedia';
 
 interface AchievementsSectionProps {
   onNavigate: (path: string) => void;
@@ -39,57 +40,63 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({ onNavi
 
   const podiumCards = [
     {
+      id: 'casecation-season-2-recognition',
       title: 'CaseCation Season 2 Grand Finale Stage Recognition',
       badge: 'Production Wing Head Award',
       category: 'NATIONAL BUSINESS CASE COMPETITION',
       organizer: 'Rajshahi University Business Club (RUBC)',
       year: '2025',
-      image: '/images/casecation_award.jpg',
+      initialImage: '',
       description: 'Formal stage felicitation for leading a 15-member creative squad and producing 450+ branding assets across 20+ universities.',
     },
     {
+      id: 'imagen-ventures-youth-challenge',
       title: 'ImaGen Ventures Youth Challenge 2024-25 Finalist',
       badge: 'National Finalist & Boot-Camp',
       category: 'UNICEF & GENERATION UNLIMITED',
       organizer: 'UNICEF, Generation Unlimited & JAAGO Foundation',
       year: '2024–2025',
-      image: '/images/cert_unicef_imagen.jpg',
+      initialImage: '',
       description: 'Awarded finalist certificate for architecting a scalable youth-driven social venture model during the Mymensingh regional boot-camp.',
     },
     {
+      id: 'ignite-article-writing-championship',
       title: 'Ignite 3.0 Article Writing Championship (1st Place)',
       badge: 'Champion (1st Place)',
       category: 'STRATEGIC WRITING & ANALYSIS',
       organizer: 'Rajshahi University Business Club (RUBC)',
       year: '2024',
-      image: '/images/ignite_champion_award.jpg',
+      initialImage: '',
       description: 'Clinched first place for authoritative analysis of macroeconomic transitions and youth enterprise viability.',
     },
     {
+      id: 'hult-prize-campus-deputy-director',
       title: 'Hult Prize at University of Rajshahi Organizing Team',
       badge: 'Deputy Campus Director',
       category: 'GLOBAL SOCIAL ENTREPRENEURSHIP',
       organizer: 'Hult Prize Global Foundation',
       year: '2025',
-      image: '/images/hult_team_ru.jpg',
+      initialImage: '',
       description: 'Mobilized 750+ student teams to submit social ventures and led a 50+ member organizing committee across campus.',
     },
     {
+      id: 'rubc-executive-vp-board',
       title: 'Rajshahi University Business Club Executive Board',
       badge: 'Vice President',
       category: 'EXECUTIVE LEADERSHIP & HR GOVERNANCE',
       organizer: 'RUBC Executive Committee 2026-27',
       year: '2026',
-      image: '/images/jamil_profile_official.jpg',
+      initialImage: '/images/jamil_profile_official.jpg',
       description: 'Directing strategic HR governance, member talent development, and organizational operations for a 200+ member community.',
     },
     {
+      id: 'project-pathochinhno-esg',
       title: 'Project Pathochinhno Environmental & Youth Action',
       badge: 'Founder & Lead Coordinator',
       category: 'SUSTAINABILITY & UN SDGS',
       organizer: 'Youth Social Impact Umbrella',
       year: '2025–Present',
-      image: '/images/pathchinhno_social.jpg',
+      initialImage: '',
       description: 'Planted 170+ native trees and conducted the Mission BluePulse Padma riverbank conservation drive with 40+ youth volunteers.',
     },
   ];
@@ -114,7 +121,7 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({ onNavi
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-6xl font-display font-black tracking-tight text-[#F8FAFC] mb-3 sm:mb-4">
             Competition &amp;{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00D1FF] to-[#00C4CC] text-glow-blue">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00D1FF] to-[#00C4CC]">
               Innovation Success
             </span>
           </h2>
@@ -152,28 +159,22 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({ onNavi
           ))}
         </div>
 
-        {/* 6 Podium Cards */}
+        {/* 6 Podium Cards with Authentic Media Card */}
         <div className="mb-10 sm:mb-14">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {podiumCards.map((item, idx) => (
               <div key={idx} className="flex flex-col gap-3 sm:gap-4 group/podium">
-                {/* Photo container */}
-                <div className="relative rounded-[1.25rem] sm:rounded-[1.5rem] border border-white/10 overflow-hidden h-[240px] sm:h-[300px] lg:h-[340px] w-full bg-[#030B14]/50 hover:border-[#00D1FF]/40 hover:shadow-[0_0_20px_rgba(0,209,255,0.1)] transition-all duration-500 shadow-xl shrink-0">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover/podium:scale-[1.05] pointer-events-none"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#030B14] via-[#030B14]/30 to-transparent pointer-events-none" />
-                  
-                  {/* Badge */}
-                  <div className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-20">
-                    <span className="inline-flex items-center text-[10px] sm:text-xs font-black uppercase tracking-wider px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-slate-950/85 backdrop-blur-md border border-white/20 text-[#00D1FF] shadow-xl">
-                      {item.badge}
-                    </span>
-                  </div>
-                </div>
+                {/* Authentic Photo or Verified Official Credential Certificate */}
+                <AuthenticCardMedia
+                  id={`achievement_${item.id}`}
+                  title={item.title}
+                  subtitle={item.organizer}
+                  badge={item.badge}
+                  year={item.year}
+                  initialImage={item.initialImage}
+                  category={item.category}
+                  aspectRatioClass="h-[240px] sm:h-[280px]"
+                />
 
                 {/* Details card below image */}
                 <div className="p-4 sm:p-5 rounded-[1.25rem] border border-[#3B82F6]/20 bg-[#040D21]/90 backdrop-blur-md text-left flex flex-col justify-between min-h-[130px] sm:min-h-[140px] h-full shadow-2xl hover:border-[#00D1FF]/30 transition-all duration-300">

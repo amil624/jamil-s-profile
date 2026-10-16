@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, GraduationCap, Quote, Award, BookOpen, UserCheck } from 'lucide-react';
+import { User, GraduationCap, Quote, Award, BookOpen, UserCheck, Mail } from 'lucide-react';
 import { educationList, academicReferences } from '../data/portfolioData';
 
 export const AboutSection: React.FC = () => {
@@ -136,7 +136,7 @@ export const AboutSection: React.FC = () => {
                   Pirgachha Govt. College, Rangpur &bull; Dinajpur Board
                 </p>
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-[#94A3B8]">
-                  <span>Passed in 2020 &bull; Humanities</span>
+                  <span>Passed: 2021 &bull; Humanities</span>
                   <span>&bull;</span>
                   <span className="text-[#34D399] font-bold">GPA: 5.00 / 5.00</span>
                 </div>
@@ -156,26 +156,40 @@ export const AboutSection: React.FC = () => {
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-[#94A3B8]">
                   <span>Science / Humanities</span>
                   <span>&bull;</span>
-                  <span className="text-[#34D399] font-bold">GPA: 5.00 / 5.00</span>
+                  <span className="text-[#34D399] font-bold">GPA: 4.78 / 5.00</span>
                 </div>
               </div>
 
             </div>
 
-            {/* Academic Mentors Footer Bar */}
+            {/* Academic Mentors Footer Bar with Emails */}
             <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-[#3B82F6]/15">
               <div className="text-xs font-bold text-[#00C4CC] uppercase tracking-wider mb-2.5 flex items-center gap-2">
                 <UserCheck className="w-3.5 h-3.5" />
                 <span>Academic References</span>
               </div>
               <div className="grid sm:grid-cols-2 gap-3 text-xs text-[#CBD5E1]">
-                <div>
+                <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.05]">
                   <span className="font-semibold text-white">Dr. Mst. Marzina Begum</span>
-                  <p className="text-[11px] text-[#94A3B8]">Chairman & Professor, Dept. of Public Administration</p>
+                  <p className="text-[11px] text-[#94A3B8]">Chairman &amp; Professor, Dept. of Public Administration</p>
+                  <a
+                    href="mailto:marzinabegum80@gmail.com"
+                    className="inline-flex items-center gap-1.5 text-[11px] text-[#00D1FF] hover:underline mt-1 font-mono"
+                  >
+                    <Mail className="w-3 h-3" />
+                    <span>marzinabegum80@gmail.com</span>
+                  </a>
                 </div>
-                <div>
+                <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.05]">
                   <span className="font-semibold text-white">Dr. Md. Nurul Momen</span>
                   <p className="text-[11px] text-[#94A3B8]">Professor, Dept. of Public Administration</p>
+                  <a
+                    href="mailto:nurulmomen78@gmail.com"
+                    className="inline-flex items-center gap-1.5 text-[11px] text-[#00D1FF] hover:underline mt-1 font-mono"
+                  >
+                    <Mail className="w-3 h-3" />
+                    <span>nurulmomen78@gmail.com</span>
+                  </a>
                 </div>
               </div>
             </div>

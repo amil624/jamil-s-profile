@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ArrowRight,
   Download,
-  ChevronLeft,
-  ChevronRight,
   TrendingUp,
   Palette,
   Users,
   HeartHandshake,
+  Target,
+  Globe2,
   Sparkles,
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
-import { profileData, careerHighlights } from '../data/portfolioData';
+import { profileData } from '../data/portfolioData';
+import { getStoredImage } from '../lib/imageStorage';
 
 interface HeroProps {
   onOpenCv: () => void;
@@ -19,112 +19,78 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onOpenCv, onNavigateToProject }) => {
-  const [activeHighlightIndex, setActiveHighlightIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const touchStartX = useRef<number | null>(null);
-  const touchEndX = useRef<number | null>(null);
+  const [profileImg, setProfileImg] = useState<string>(() =>
+    getStoredImage('hero_profile', '/images/jamil_profile_official.jpg')
+  );
 
-  // Auto-advance rotation every 5 seconds unless paused
   useEffect(() => {
-    if (isPaused) return;
-
-    const timer = setInterval(() => {
-      setActiveHighlightIndex((prev) =>
-        prev === careerHighlights.length - 1 ? 0 : prev + 1
-      );
-    }, 5000);
-
-    return () => clearInterval(timer);
-  }, [isPaused, activeHighlightIndex]);
-
-  const prevHighlight = () => {
-    setActiveHighlightIndex((prev) =>
-      prev === 0 ? careerHighlights.length - 1 : prev - 1
-    );
-  };
-
-  const nextHighlight = () => {
-    setActiveHighlightIndex((prev) =>
-      prev === careerHighlights.length - 1 ? 0 : prev + 1
-    );
-  };
-
-  // Touch handlers for mobile swipe
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.targetTouches[0].clientX;
-    setIsPaused(true);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.targetTouches[0].clientX;
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStartX.current || !touchEndX.current) {
-      setIsPaused(false);
-      return;
-    }
-    const distance = touchStartX.current - touchEndX.current;
-    if (distance > 45) {
-      nextHighlight();
-    } else if (distance < -45) {
-      prevHighlight();
-    }
-    touchStartX.current = null;
-    touchEndX.current = null;
-    setTimeout(() => setIsPaused(false), 2000);
-  };
-
-  const currentHighlight = careerHighlights[activeHighlightIndex] || careerHighlights[0];
+    const handleUpdate = (e: CustomEvent) => {
+      if (e.detail?.key === 'hero_profile') {
+        setProfileImg(e.detail.dataUrl || '/images/jamil_profile_official.jpg');
+      }
+    };
+    window.addEventListener('portfolio_image_updated' as any, handleUpdate);
+    return () => window.removeEventListener('portfolio_image_updated' as any, handleUpdate);
+  }, []);
 
   const focusSkills = [
-    { label: 'Strategic Thinking', icon: <TrendingUp className="w-4 h-4 text-[#3B82F6]" /> },
-    { label: 'Creative Execution', icon: <Palette className="w-4 h-4 text-[#06B6D4]" /> },
-    { label: 'Team Leadership', icon: <Users className="w-4 h-4 text-[#34D399]" /> },
-    { label: 'Social Impact', icon: <HeartHandshake className="w-4 h-4 text-[#8B5CF6]" /> },
+    { label: 'Strategic Thinking', icon: <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#00D1FF]" /> },
+    { label: 'Creative Execution', icon: <Palette className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#38BDF8]" /> },
+    { label: 'Team Leadership', icon: <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#34D399]" /> },
+    { label: 'Social Impact', icon: <HeartHandshake className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#A78BFA]" /> },
   ];
 
   return (
     <section
       id="hero"
-      className="relative min-h-[92vh] pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pt-[110px] lg:pb-16 px-4 sm:px-6 max-w-[1536px] mx-auto flex items-center overflow-hidden"
+      className="relative min-h-[90vh] pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pt-[110px] lg:pb-16 px-4 sm:px-6 lg:px-8 max-w-[1536px] xl:max-w-[1600px] mx-auto flex flex-col justify-center overflow-hidden"
     >
-      {/* Ambient background glows matching abdurrahmanrahim.com */}
+      {/* High-tech ambient glowing radial lights matching reference design */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-[35rem] sm:w-[45rem] h-[35rem] sm:h-[45rem] bg-[radial-gradient(circle,rgba(37,99,235,0.09)_0%,transparent_60%)] blur-[90px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[30rem] sm:w-[40rem] h-[30rem] sm:h-[40rem] bg-[radial-gradient(circle,rgba(6,182,212,0.07)_0%,transparent_60%)] blur-[90px]" />
+        <div className="absolute top-1/4 left-1/4 w-[32rem] sm:w-[48rem] h-[32rem] sm:h-[48rem] bg-[radial-gradient(circle,rgba(0,209,255,0.12)_0%,transparent_65%)] blur-[95px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[30rem] sm:w-[42rem] h-[30rem] sm:h-[42rem] bg-[radial-gradient(circle,rgba(59,130,246,0.1)_0%,transparent_65%)] blur-[95px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[28rem] h-[28rem] bg-[radial-gradient(circle,rgba(52,211,153,0.06)_0%,transparent_70%)] blur-[90px]" />
       </div>
 
-      <div className="relative z-10 w-full grid grid-cols-12 gap-6 lg:gap-8 items-center">
+      <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center">
         
-        {/* Left Column: Headline, Bio, Skill Pills, CTAs */}
-        <div className="col-span-12 lg:col-span-5 xl:col-span-4 flex flex-col justify-center text-left">
+        {/* Left Column: Top Tag, Display Headline, Tagline, Skill Pills, CTAs */}
+        <div className="lg:col-span-7 xl:col-span-7 2xl:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left z-20">
           
-          {/* Executive Sub-badge */}
-          <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full border border-[#3B82F6]/25 bg-[#0A1F4D]/50 text-[11px] sm:text-xs font-semibold text-[#00D1FF] mb-4 sm:mb-5 w-fit shadow-md backdrop-blur-md">
-            <span className="w-2 h-2 rounded-full bg-[#00D1FF] shadow-[0_0_8px_rgba(0,209,255,0.8)] animate-pulse" />
-            <span className="truncate">Public Administration Senior &bull; RUBC VP</span>
+          {/* Subheader pill matching reference desktop & mobile */}
+          <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full border border-[#00D1FF]/30 bg-[#0A1F4D]/60 text-[10px] sm:text-xs font-bold tracking-widest text-[#00D1FF] uppercase mb-4 sm:mb-5 shadow-[0_0_15px_rgba(0,209,255,0.15)] backdrop-blur-md">
+            <span className="w-2 h-2 rounded-full bg-[#00D1FF] shadow-[0_0_8px_rgba(0,209,255,0.9)] animate-pulse" />
+            <span>Public Administration Senior &bull; RUBC VP</span>
           </div>
 
-          {/* Large Display Title - Mobile Responsive */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(2.4rem,4vw,4rem)] xl:text-[4.6rem] font-display font-black leading-[1.04] tracking-tight text-[#F8FAFC] mb-3">
-            <span className="block break-words sm:whitespace-nowrap">Md. Jamil Hosen</span>
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#00D1FF] via-[#00E5FF] to-[#34D399] break-words sm:whitespace-nowrap">
+          {/* Large Display Title - Full Name restored at top */}
+          <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-6xl lg:text-[clamp(2.8rem,3.8vw,4.2rem)] xl:text-[clamp(4.2rem,4.6vw,5.5rem)] 2xl:text-[6rem] font-display font-black leading-[0.98] sm:leading-[1.02] tracking-tight text-[#F8FAFC] mb-3 sm:mb-4">
+            <span className="block tracking-tight text-white">Md. Jamil Hosen</span>
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#00D1FF] via-[#00E5FF] to-[#34D399] tracking-tight drop-shadow-[0_0_35px_rgba(0,209,255,0.3)]">
               Khandakar
             </span>
           </h1>
 
+          {/* Executive Subhead */}
+          <div className="text-xs sm:text-sm font-semibold text-[#00D1FF] mb-3 sm:mb-4 flex flex-wrap items-center justify-center lg:justify-start gap-2">
+            <span className="text-[#38BDF8]">Vice President, RUBC</span>
+            <span className="text-slate-600">&bull;</span>
+            <span className="text-[#34D399]">Deputy Campus Director, Hult Prize RU</span>
+            <span className="text-slate-600">&bull;</span>
+            <span className="text-slate-300">Public Administration, RU</span>
+          </div>
+
           {/* Subtitle / Intro */}
-          <p className="text-[#E2E8F0] text-sm sm:text-base md:text-lg leading-relaxed font-light mb-6 max-w-lg">
+          <p className="text-[#CBD5E1] text-sm sm:text-base md:text-lg leading-relaxed font-light mb-6 sm:mb-7 max-w-xl">
             {profileData.tagline}
           </p>
 
           {/* 4 Competency Pills with Glow & Custom Colors */}
-          <div className="flex flex-wrap gap-2 sm:gap-2.5 mb-7 sm:mb-8">
+          <div className="flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-2.5 mb-7 sm:mb-8">
             {focusSkills.map((skill) => (
               <div
                 key={skill.label}
-                className="px-3.5 sm:px-4 py-2 rounded-xl border border-[#3B82F6]/20 bg-[#0A1F4D]/50 text-[#F8FAFC] text-xs font-bold flex items-center gap-2 hover:border-[#3B82F6]/40 hover:bg-[#0A1F4D]/80 transition-all shadow-md cursor-default select-none"
+                className="px-3.5 sm:px-4 py-2 rounded-xl border border-[#3B82F6]/25 bg-[#06132D]/70 text-[#F8FAFC] text-xs font-bold flex items-center gap-2 hover:border-[#00D1FF]/50 hover:bg-[#0A1F4D] transition-all shadow-md cursor-default select-none backdrop-blur-sm"
               >
                 {skill.icon}
                 <span>{skill.label}</span>
@@ -144,7 +110,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCv, onNavigateToProject }) => 
                 }
               }}
               id="hero-view-work-btn"
-              className="px-6 sm:px-7 py-3.5 sm:py-4 bg-gradient-to-r from-[#00D1FF] to-[#3B82F6] text-[#F8FAFC] rounded-xl text-xs font-bold tracking-wider uppercase hover:shadow-[0_0_25px_rgba(0,209,255,0.5)] transition-all flex items-center justify-center gap-2.5 group hover:scale-[1.02] active:scale-[0.98] border border-[#00D1FF]/30 min-h-[44px] cursor-pointer"
+              className="px-7 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-[#00D1FF] to-[#3B82F6] text-[#030B14] font-black rounded-xl text-xs sm:text-sm tracking-wider uppercase hover:shadow-[0_0_30px_rgba(0,209,255,0.6)] transition-all flex items-center justify-center gap-2.5 group hover:scale-[1.02] active:scale-[0.98] border border-[#00D1FF]/40 cursor-pointer"
             >
               <span>View My Work</span>
               <ArrowRight className="w-4 h-4 text-current group-hover:translate-x-1 transition-transform" />
@@ -153,7 +119,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCv, onNavigateToProject }) => 
             <button
               onClick={onOpenCv}
               id="hero-download-resume-btn"
-              className="px-6 sm:px-7 py-3.5 sm:py-4 border border-[#3B82F6]/30 bg-white/[0.04] text-[#F8FAFC] rounded-xl text-xs font-bold tracking-wider uppercase hover:bg-white/[0.09] hover:border-[#3B82F6]/50 transition-all flex items-center justify-center gap-2.5 active:scale-[0.98] min-h-[44px]"
+              className="px-7 sm:px-8 py-3.5 sm:py-4 border border-[#3B82F6]/30 bg-white/[0.04] text-[#F8FAFC] rounded-xl text-xs sm:text-sm font-bold tracking-wider uppercase hover:bg-white/[0.09] hover:border-[#00D1FF]/50 transition-all flex items-center justify-center gap-2.5 active:scale-[0.98] cursor-pointer"
             >
               <Download className="w-4 h-4 text-[#00D1FF]" />
               <span>Download Resume</span>
@@ -161,179 +127,81 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCv, onNavigateToProject }) => 
           </div>
         </div>
 
-        {/* Center Column: Portrait Image with Circular Glowing Ring Backdrop */}
-        <div className="col-span-12 lg:col-span-4 xl:col-span-4 flex flex-col justify-end items-center relative z-10 mt-6 lg:mt-0 pointer-events-none self-end">
-          <div className="relative inline-block w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[380px] lg:max-w-full xl:max-w-[460px] transition-all pointer-events-auto group">
+        {/* Right Column: Hero Profile Centerpiece matching Desktop & Mobile screenshots */}
+        <div className="lg:col-span-5 xl:col-span-5 2xl:col-span-5 flex flex-col items-center justify-center relative z-20 mt-4 lg:mt-0">
+          
+          <div className="relative w-full max-w-[320px] xs:max-w-[360px] sm:max-w-[420px] lg:max-w-[460px] xl:max-w-[500px] flex items-center justify-center">
             
-            {/* Pulsating Glowing Ring Backdrop */}
-            <div className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] xs:w-[280px] sm:w-[340px] lg:w-[360px] xl:w-[440px] h-[250px] xs:h-[280px] sm:h-[340px] lg:h-[360px] xl:h-[440px] rounded-full border border-[#3B82F6]/30 bg-[#0A1F4D]/15 backdrop-blur-sm shadow-[0_0_70px_rgba(37,99,235,0.25),inset_0_0_35px_rgba(6,182,212,0.2)] -z-10 animate-[pulse_6s_infinite_alternate]" />
+            {/* Outer Glowing Concentric Rings matching abdurrahmanrahim.com */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] xs:w-[320px] sm:w-[380px] lg:w-[420px] xl:w-[460px] h-[280px] xs:h-[320px] sm:h-[380px] lg:h-[420px] xl:h-[460px] rounded-full border border-[#00D1FF]/25 bg-gradient-to-tr from-[#00D1FF]/10 via-[#3B82F6]/5 to-transparent shadow-[0_0_80px_rgba(0,209,255,0.2),inset_0_0_40px_rgba(0,209,255,0.15)] -z-10 animate-pulse pointer-events-none" />
             
-            {/* Official Portrait Image */}
-            <img
-              src="/images/jamil_profile_official.jpg"
-              alt="Md. Jamil Hosen Khandakar Official Portrait"
-              className="relative z-10 w-full object-contain object-bottom filter drop-shadow-[0_20px_45px_rgba(0,0,0,0.85)] max-h-[340px] xs:max-h-[380px] sm:max-h-[440px] lg:max-h-[calc(100vh-140px)] xl:max-h-[660px] rounded-2xl mx-auto transition-transform duration-500 group-hover:scale-[1.01]"
-              referrerPolicy="no-referrer"
-              onError={(e) => {
-                const target = e.currentTarget as HTMLImageElement;
-                if (!target.dataset.triedFallback) {
-                  target.dataset.triedFallback = 'true';
-                  target.src = 'https://ik.imagekit.io/Jamils/Jamil%20Hosen%20Khandakar.%20Jpg%20(1).heif?tr=f-auto';
-                }
-              }}
-            />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] xs:w-[270px] sm:w-[320px] lg:w-[360px] xl:w-[400px] h-[240px] xs:h-[270px] sm:h-[320px] lg:h-[360px] xl:h-[400px] rounded-full border border-dashed border-[#38BDF8]/30 -z-10 pointer-events-none" />
 
-            {/* Floating Executive Status Pill */}
-            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-30 px-3.5 py-1.5 rounded-full bg-[#030B14]/90 border border-[#00C4CC]/40 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.6)] flex items-center gap-2 whitespace-nowrap">
-              <span className="w-2 h-2 rounded-full bg-[#34D399] shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse" />
-              <span className="text-[11px] font-semibold text-[#F8FAFC] tracking-wide">
-                Md. Jamil Hosen Khandakar
-              </span>
-            </div>
-          </div>
-
-          {/* Smooth bottom gradient fade into page background */}
-          <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#030B14] via-[#030B14]/90 to-transparent z-20 pointer-events-none" />
-        </div>
-
-        {/* Right Column: Dynamic CAREER HIGHLIGHTS Carousel Card */}
-        <div
-          className="col-span-12 lg:col-span-3 xl:col-span-4 flex flex-col justify-center relative z-30 mt-4 lg:mt-0 py-2 sm:py-6 lg:self-center"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          <div className="w-full rounded-[1.5rem] sm:rounded-[1.75rem] border border-[#3B82F6]/25 bg-[#050B18]/90 backdrop-blur-xl p-5 sm:p-6 xl:p-8 shadow-[0_25px_60px_rgba(0,0,0,0.6)] relative flex flex-col justify-between group h-fit overflow-hidden">
-            
-            {/* Animated slide countdown progress bar */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-white/5 overflow-hidden">
-              <motion.div
-                key={activeHighlightIndex}
-                initial={{ width: '0%' }}
-                animate={{ width: isPaused ? '100%' : '100%' }}
-                transition={{ duration: isPaused ? 0 : 5, ease: 'linear' }}
-                className="h-full bg-gradient-to-r from-[#00D1FF] to-[#34D399]"
-              />
-            </div>
-
-            <div className="flex flex-col flex-grow">
-              {/* Header with Title and Prev/Next Carousel Arrows */}
-              <div className="flex items-center justify-between mb-4 sm:mb-5 mt-1">
-                <span className="text-[10px] sm:text-[11px] font-bold tracking-widest text-[#00C4CC] uppercase flex items-center gap-2 leading-none">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00C4CC] shadow-[0_0_8px_rgba(0,196,204,0.8)] animate-pulse" />
-                  CAREER HIGHLIGHTS
-                </span>
-
-                <div className="flex items-center gap-1.5 z-10 relative">
-                  <button
-                    onClick={prevHighlight}
-                    aria-label="Previous career highlight"
-                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[#3B82F6]/30 bg-[#0A1F4D]/60 text-[#CBD5E1] hover:text-[#00D1FF] hover:bg-[#0A1F4D] transition-all flex items-center justify-center active:scale-90 min-h-[32px] min-w-[32px]"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={nextHighlight}
-                    aria-label="Next career highlight"
-                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-[#3B82F6]/30 bg-[#0A1F4D]/60 text-[#CBD5E1] hover:text-[#00D1FF] hover:bg-[#0A1F4D] transition-all flex items-center justify-center active:scale-90 min-h-[32px] min-w-[32px]"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
+            {/* Floating Glass Badge 1: Top-Left (Strategic Planner) */}
+            <div className="absolute -top-3 -left-2 xs:-left-3 sm:-left-6 lg:-left-8 z-30 max-w-[160px] xs:max-w-[190px] sm:max-w-[210px] p-2 sm:p-2.5 rounded-2xl bg-[#06132D]/90 border border-[#00D1FF]/40 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.6)] flex items-center gap-2.5 transition-transform hover:scale-105 select-none pointer-events-auto">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#00D1FF]/15 border border-[#00D1FF]/30 flex items-center justify-center shrink-0">
+                <Target className="w-4 h-4 text-[#00D1FF]" />
+              </div>
+              <div className="overflow-hidden text-left">
+                <div className="flex items-center gap-1">
+                  <span className="text-[11px] sm:text-xs font-black text-white truncate">
+                    Strategic Planner
+                  </span>
+                  <ArrowRight className="w-3 h-3 text-[#00D1FF] -rotate-45 shrink-0" />
                 </div>
+                <p className="text-[9px] sm:text-[10px] text-slate-300 font-medium truncate">
+                  RUBC Executive 2026-27
+                </p>
+              </div>
+            </div>
+
+            {/* Floating Glass Badge 2: Bottom-Right (Digitalyst & Operations) */}
+            <div className="absolute bottom-6 -right-2 xs:-right-3 sm:-right-6 lg:-right-8 z-30 max-w-[170px] xs:max-w-[200px] sm:max-w-[220px] p-2 sm:p-2.5 rounded-2xl bg-[#06132D]/90 border border-[#34D399]/40 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.6)] flex items-center gap-2.5 transition-transform hover:scale-105 select-none pointer-events-auto">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#34D399]/15 border border-[#34D399]/30 flex items-center justify-center shrink-0">
+                <Globe2 className="w-4 h-4 text-[#34D399]" />
+              </div>
+              <div className="overflow-hidden text-left">
+                <div className="flex items-center gap-1">
+                  <span className="text-[11px] sm:text-xs font-black text-white truncate">
+                    Digitalyst
+                  </span>
+                  <ArrowRight className="w-3 h-3 text-[#34D399] -rotate-45 shrink-0" />
+                </div>
+                <p className="text-[9px] sm:text-[10px] text-slate-300 font-medium truncate">
+                  Deputy Campus Director
+                </p>
+              </div>
+            </div>
+
+            {/* The Main Authentic Profile Image Container */}
+            <div className="relative z-10 w-full flex flex-col items-center">
+              <div className="relative group overflow-hidden rounded-3xl border border-[#00D1FF]/25 shadow-[0_20px_60px_rgba(0,0,0,0.8)] bg-gradient-to-b from-[#0A1F4D]/40 to-[#030B14]">
+                
+                {/* Real Photo */}
+                <img
+                  src={profileImg}
+                  alt="Md. Jamil Hosen Khandakar Official Portrait"
+                  className="w-full object-cover object-top max-h-[360px] xs:max-h-[400px] sm:max-h-[460px] lg:max-h-[520px] xl:max-h-[580px] transition-transform duration-500 group-hover:scale-[1.02]"
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    const target = e.currentTarget as HTMLImageElement;
+                    if (!target.dataset.triedFallback) {
+                      target.dataset.triedFallback = 'true';
+                      target.src = 'https://ik.imagekit.io/Jamils/Jamil%20Hosen%20Khandakar.%20Jpg%20(1).heif?tr=f-auto';
+                    }
+                  }}
+                />
+
+                {/* Seamless gradient fade at the bottom into the deep background */}
+                <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#030B14] via-[#030B14]/80 to-transparent pointer-events-none" />
               </div>
 
-              {/* Dynamic Animated Content Container */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentHighlight.id}
-                  initial={{ opacity: 0, x: 12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -12 }}
-                  transition={{ duration: 0.28, ease: 'easeOut' }}
-                >
-                  {/* Title & Role */}
-                  <div className="mb-3 sm:mb-4">
-                    <h3 className="text-xl sm:text-2xl xl:text-3xl font-display font-black text-[#F8FAFC] tracking-tight leading-tight mb-1">
-                      {currentHighlight.organization}
-                    </h3>
-                    <p className="text-xs text-[#00D1FF] font-semibold uppercase tracking-wide">
-                      {currentHighlight.role}
-                    </p>
-                  </div>
-
-                  {/* Highlight Image Preview with Ambient Glow */}
-                  <div className="relative aspect-[16/10] w-full bg-gradient-to-br from-[#0A1F4D] to-[#020817] rounded-xl overflow-hidden border border-[#3B82F6]/20 mb-3 sm:mb-4 group/img shrink-0">
-                    <img
-                      src={currentHighlight.imageUrl}
-                      alt=""
-                      className="absolute inset-0 w-full h-full object-cover blur-xl opacity-35 scale-110 pointer-events-none"
-                      referrerPolicy="no-referrer"
-                    />
-                    <img
-                      src={currentHighlight.imageUrl}
-                      alt={currentHighlight.organization}
-                      className="relative z-10 w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute top-2.5 right-2.5 z-20">
-                      <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#030B14]/85 backdrop-blur-md border border-[#00C4CC]/30 text-[#00C4CC]">
-                        {currentHighlight.period}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Brief Description */}
-                  <p className="text-[#CBD5E1] text-xs leading-relaxed line-clamp-3 mb-3.5 font-light">
-                    {currentHighlight.shortIntro}
-                  </p>
-
-                  {/* Metric Pill */}
-                  {currentHighlight.metrics && currentHighlight.metrics[0] && (
-                    <div className="flex items-center gap-2 p-2.5 rounded-lg bg-[#0A1F4D]/50 border border-[#3B82F6]/20 text-xs text-[#94A3B8]">
-                      <span className="text-[#00C4CC] font-bold">
-                        {currentHighlight.metrics[0].value}
-                      </span>
-                      <span>&bull;</span>
-                      <span className="truncate">{currentHighlight.metrics[0].label}</span>
-                    </div>
-                  )}
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* Jump to Project link & Pagination Dots */}
-            <div className="pt-3.5 mt-3 border-t border-[#3B82F6]/15 flex items-center justify-between">
-              <button
-                onClick={() => {
-                  if (onNavigateToProject) {
-                    onNavigateToProject('portfolio');
-                  } else {
-                    const el = document.getElementById('portfolio');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-                className="text-xs font-bold text-[#00D1FF] hover:text-[#34D399] transition-colors flex items-center gap-1.5 group/link py-1 cursor-pointer"
-              >
-                <span>Explore Project</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
-              </button>
-
-              {/* Direct Jump Dots */}
-              <div className="flex items-center gap-1.5">
-                {careerHighlights.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveHighlightIndex(idx)}
-                    aria-label={`Jump to highlight ${idx + 1}`}
-                    className={`h-1.5 rounded-full transition-all ${
-                      activeHighlightIndex === idx
-                        ? 'w-5 bg-[#00D1FF]'
-                        : 'w-1.5 bg-slate-600 hover:bg-slate-400'
-                    }`}
-                  />
-                ))}
+              {/* Status Indicator Pill at Portrait Base */}
+              <div className="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#06132D]/90 border border-[#00D1FF]/40 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+                <span className="w-2 h-2 rounded-full bg-[#34D399] shadow-[0_0_8px_rgba(52,211,153,0.9)] animate-pulse" />
+                <span className="text-xs font-bold text-white tracking-wide">
+                  Md. Jamil Hosen Khandakar
+                </span>
               </div>
             </div>
 

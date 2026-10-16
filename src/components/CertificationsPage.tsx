@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Award, CheckCircle2, Calendar, Building, ExternalLink, ShieldCheck, Eye, X, ZoomIn } from 'lucide-react';
 import { certificationsList } from '../data/portfolioData';
+import { AuthenticCardMedia } from './AuthenticCardMedia';
 
 interface CertificationsPageProps {
   onNavigate: (path: string) => void;
@@ -54,30 +55,17 @@ export const CertificationsPage: React.FC<CertificationsPageProps> = ({ onNaviga
             className="p-5 sm:p-7 rounded-[1.75rem] sm:rounded-[2rem] border border-[#3B82F6]/20 bg-[#050B18]/90 backdrop-blur-xl shadow-2xl flex flex-col justify-between hover:border-[#34D399]/40 hover:scale-[1.01] transition-all group"
           >
             <div>
-              {/* Optional Certificate Visual Image Card */}
-              {cert.image && (
-                <div
-                  onClick={() => setActiveCertModal({ title: cert.title, image: cert.image!, issuer: cert.issuer })}
-                  className="mb-4 relative rounded-xl overflow-hidden border border-white/10 bg-[#030B14] cursor-pointer group/certimg aspect-[4/3] shadow-lg"
-                >
-                  <img
-                    src={cert.image}
-                    alt={`${cert.title} Certificate`}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover/certimg:scale-105"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover/certimg:opacity-40 transition-opacity" />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/certimg:opacity-100 transition-opacity bg-black/40 backdrop-blur-xs">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/90 text-white text-xs font-semibold border border-white/30 shadow-xl">
-                      <ZoomIn className="w-3.5 h-3.5 text-[#34D399]" />
-                      <span>View Certificate</span>
-                    </span>
-                  </div>
-                  <span className="absolute bottom-2 left-2 text-[10px] font-bold text-white/90 bg-slate-950/80 px-2 py-0.5 rounded border border-white/10 backdrop-blur-sm">
-                    Verified Credential
-                  </span>
-                </div>
-              )}
+              {/* Authentic Photo or Verified Official Credential Certificate */}
+              <AuthenticCardMedia
+                id={`cert_${cert.id}`}
+                title={cert.title}
+                subtitle={cert.issuer}
+                badge={cert.type}
+                year={cert.date}
+                category={cert.type}
+                aspectRatioClass="aspect-[4/3] mb-4"
+                onZoom={(img) => setActiveCertModal({ title: cert.title, image: img, issuer: cert.issuer })}
+              />
 
               <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4">
                 <span className="text-[10px] font-bold text-[#34D399] uppercase tracking-wider">

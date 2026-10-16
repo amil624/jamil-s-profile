@@ -13,12 +13,14 @@ import { ExpertiseSection } from './components/ExpertiseSection';
 import { PortfolioSection } from './components/PortfolioSection';
 import { AchievementsSection } from './components/AchievementsSection';
 import { EndorsementsSection } from './components/EndorsementsSection';
+import { SportsGamesSection } from './components/SportsGamesSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { ResumeModal } from './components/ResumeModal';
 import { AchievementsPage } from './components/AchievementsPage';
 import { CertificationsPage } from './components/CertificationsPage';
 import { FullExperiencePage } from './components/FullExperiencePage';
+import { AdminPanel } from './components/AdminPanel';
 
 export default function App() {
   const [isCvModalOpen, setIsCvModalOpen] = useState(false);
@@ -34,7 +36,7 @@ export default function App() {
 
       if (hash || fullUrl.includes('/#')) {
         const cleanHash = hash.replace(/^#\/?/, '').trim();
-        if (['achievements', 'certifications', 'experience'].includes(cleanHash)) {
+        if (['achievements', 'certifications', 'experience', 'admin'].includes(cleanHash)) {
           setCurrentPath(`/${cleanHash}`);
           window.history.replaceState(null, '', `/${cleanHash}`);
         } else {
@@ -46,14 +48,14 @@ export default function App() {
             }, 100);
           }
           // Cleanly replace /# with clean pathname /
-          const targetPath = ['/achievements', '/certifications', '/experience'].includes(pathname)
+          const targetPath = ['/achievements', '/certifications', '/experience', '/admin'].includes(pathname)
             ? pathname
             : '/';
           setCurrentPath(targetPath);
           window.history.replaceState(null, '', targetPath);
         }
       } else {
-        if (['/achievements', '/certifications', '/experience'].includes(pathname)) {
+        if (['/achievements', '/certifications', '/experience', '/admin'].includes(pathname)) {
           setCurrentPath(pathname);
         } else {
           setCurrentPath('/');
@@ -93,6 +95,7 @@ export default function App() {
         'expertise',
         'portfolio',
         'achievements',
+        'sports',
         'contact',
       ];
       const scrollPosition = window.scrollY + 250;
@@ -113,6 +116,10 @@ export default function App() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [currentPath]);
+
+  if (currentPath === '/admin') {
+    return <AdminPanel onNavigate={handleNavigate} />;
+  }
 
   return (
     <div className="min-h-screen bg-[#030B14] text-[#F8FAFC] selection:bg-[#00D1FF] selection:text-[#030B14] font-sans antialiased overflow-x-hidden">
@@ -162,6 +169,9 @@ export default function App() {
 
             {/* Live Endorsements & Peer Recommendations (Supabase Powered) */}
             <EndorsementsSection />
+
+            {/* Sports and Games (Athletic Leadership & Competitive Spirit) */}
+            <SportsGamesSection />
 
             {/* Contact Form & Direct Connect */}
             <ContactSection />

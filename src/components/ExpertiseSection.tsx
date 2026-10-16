@@ -1,8 +1,9 @@
 import React from 'react';
-import { Target, Layers, Laptop, PenTool, LayoutTemplate, Video, FileSpreadsheet, Presentation } from 'lucide-react';
+import { Target, Layers, Laptop, PenTool, LayoutTemplate, Video, FileSpreadsheet, Presentation, Share2 } from 'lucide-react';
 
 export const ExpertiseSection: React.FC = () => {
   const tools = [
+    { name: 'Meta Business Suite', category: 'Campaign & Social', icon: <Share2 className="w-5 h-5 text-[#0081FB]" /> },
     { name: 'Adobe Illustrator', category: 'Vector & Print', icon: <PenTool className="w-5 h-5 text-[#FF9A00]" /> },
     { name: 'Adobe Photoshop', category: 'Photo & Raster', icon: <Layers className="w-5 h-5 text-[#31A8FF]" /> },
     { name: 'Canva Pro', category: 'Rapid Graphics', icon: <LayoutTemplate className="w-5 h-5 text-[#00C4CC]" /> },

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowUp, Mail, Phone, ExternalLink, Linkedin, Heart, Database } from 'lucide-react';
+import { ArrowUp, Mail, Phone, ExternalLink, Linkedin, Heart, Database, Lock } from 'lucide-react';
 import { profileData } from '../data/portfolioData';
 import { SupabaseStatusModal } from './SupabaseStatusModal';
 
@@ -24,6 +24,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
     { label: 'About', sectionId: 'about' },
     { label: 'Experience', sectionId: 'experience' },
     { label: 'Projects', sectionId: 'portfolio' },
+    { label: 'Sports', sectionId: 'sports' },
     { label: 'Achievements', path: '/achievements' },
     { label: 'Certifications', path: '/certifications' },
     { label: 'Contact', sectionId: 'contact' },
@@ -105,6 +106,18 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             >
               <Database className="w-3 h-3" />
               <span>Supabase DB</span>
+            </button>
+            <span>&bull;</span>
+            <button
+              onClick={() => {
+                onNavigate('/admin');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="inline-flex items-center gap-1 text-[11px] text-slate-400 hover:text-[#00D1FF] transition-colors"
+              title="Administrator Panel"
+            >
+              <Lock className="w-3 h-3" />
+              <span>Admin</span>
             </button>
             <span>&bull;</span>
             <a

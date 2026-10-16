@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { careerHighlights } from '../data/portfolioData';
 import { CareerHighlight } from '../types';
+import { AuthenticCardMedia } from './AuthenticCardMedia';
 
 export const CareerHighlights: React.FC = () => {
   const [selectedHighlight, setSelectedHighlight] = useState<CareerHighlight | null>(null);
@@ -196,41 +197,24 @@ export const CareerHighlights: React.FC = () => {
                       isReversed ? 'lg:col-span-5 lg:order-1' : 'lg:col-span-5'
                     }`}
                   >
-                    <div className="relative group/img rounded-2xl overflow-hidden bg-slate-800/90 border border-slate-700/80 shadow-2xl">
-                      {item.imageUrl ? (
-                        <div className="relative aspect-[4/3] overflow-hidden">
-                          <img
-                            src={item.imageUrl}
-                            alt={item.role}
-                            referrerPolicy="no-referrer"
-                            className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f17] via-transparent to-transparent opacity-80" />
-                          
-                          {/* Image Expand trigger */}
-                          <button
-                            onClick={() => setSelectedHighlight(item)}
-                            className="absolute bottom-3 right-3 p-2 rounded-lg bg-black/60 hover:bg-black/80 text-white backdrop-blur-md border border-white/20 transition-all opacity-90 hover:opacity-100 flex items-center gap-1.5 text-xs"
-                            title="View full highlight details"
-                          >
-                            <Maximize2 className="w-3.5 h-3.5" />
-                            <span>Preview</span>
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="aspect-[4/3] flex items-center justify-center p-8 bg-slate-900 text-slate-500">
-                          <Layers className="w-12 h-12" />
-                        </div>
-                      )}
+                    <AuthenticCardMedia
+                      id={`highlight_${item.id}`}
+                      title={item.role}
+                      subtitle={item.organization}
+                      badge={item.badge}
+                      year={item.period}
+                      initialImage={item.id === 'rubc-vp' ? '/images/jamil_profile_official.jpg' : ''}
+                      aspectRatioClass="aspect-[4/3]"
+                      onZoom={() => setSelectedHighlight(item)}
+                    />
 
-                      {/* Image Caption */}
-                      {item.imageCaption && (
-                        <div className="p-3.5 bg-[#0f1523] border-t border-slate-800 text-xs text-slate-300 font-medium flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-rose-400 shrink-0"></span>
-                          <span className="line-clamp-1">{item.imageCaption}</span>
-                        </div>
-                      )}
-                    </div>
+                    {/* Image Caption */}
+                    {item.imageCaption && (
+                      <div className="p-3.5 bg-[#0f1523] rounded-xl mt-3 border border-slate-800 text-xs text-slate-300 font-medium flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-rose-400 shrink-0"></span>
+                        <span className="line-clamp-1">{item.imageCaption}</span>
+                      </div>
+                    )}
                   </div>
 
                 </div>

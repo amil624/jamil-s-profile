@@ -106,6 +106,41 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             </p>
           </div>
 
+          {/* PROFESSIONAL EXPERIENCES (from image.png) */}
+          <div className="space-y-3">
+            <h2 className="text-sm font-bold tracking-wider uppercase text-blue-900 border-b border-slate-300 pb-0.5">
+              PROFESSIONAL EXPERIENCES
+            </h2>
+
+            <div className="space-y-1">
+              <div className="flex justify-between items-baseline font-bold text-slate-900">
+                <span>English Language Trainer - Smart Student's Finance (SSF) - CEC</span>
+                <span className="text-slate-600 font-normal">July 2026 – Present</span>
+              </div>
+              <div className="italic text-slate-700 font-medium">
+                BRAC Microfinance (Dabi)
+              </div>
+              <ul className="list-disc list-inside space-y-0.5 text-slate-800 pl-1">
+                <li>Teach 65+ primary and high school students practical English communication skills.</li>
+                <li>Conduct interactive lessons to improve students' English proficiency and confidence.</li>
+              </ul>
+            </div>
+
+            <div className="space-y-1 pt-1">
+              <div className="flex justify-between items-baseline font-bold text-slate-900">
+                <span>Research Enumerator | Government-Funded Research Projects</span>
+                <span className="text-slate-600 font-normal">2025 – 2026</span>
+              </div>
+              <div className="italic text-slate-700 font-medium">
+                Department of Public Administration, University of Rajshahi
+              </div>
+              <ul className="list-disc list-inside space-y-0.5 text-slate-800 pl-1">
+                <li>Collected primary data from 250+ respondents and 10 FGDs through field interviews and surveys.</li>
+                <li>Conducted fieldwork across 5-6 upazilas for 5 research projects.</li>
+              </ul>
+            </div>
+          </div>
+
           {/* LEADERSHIP & WORK EXPERIENCE */}
           <div className="space-y-3">
             <h2 className="text-sm font-bold tracking-wider uppercase text-blue-900 border-b border-slate-300 pb-0.5">
@@ -245,7 +280,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
 
             <div className="space-y-1 pt-1">
               <div className="flex justify-between items-baseline font-bold text-slate-900">
-                <span>Higher Secondary Certificate (HSC) — Humanities</span>
+                <span>Higher Secondary Certificate (HSC) — Humanities (Passed: 2021)</span>
                 <span className="font-bold text-slate-900">GPA 5.00 / 5.00</span>
               </div>
               <div className="italic text-slate-700 font-medium">
@@ -256,7 +291,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             <div className="space-y-1 pt-1">
               <div className="flex justify-between items-baseline font-bold text-slate-900">
                 <span>Secondary School Certificate (SSC) — Science / Humanities</span>
-                <span className="font-bold text-slate-900">GPA 5.00 / 5.00</span>
+                <span className="font-bold text-slate-900">GPA 4.78 / 5.00</span>
               </div>
               <div className="italic text-slate-700 font-medium">
                 Jnankur High School, Pirgachha, Rangpur (Dinajpur Board)

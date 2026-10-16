@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Trophy, Award, Medal, Star, ExternalLink, Calendar, Users, ZoomIn, X } from 'lucide-react';
+import { AuthenticCardMedia } from './AuthenticCardMedia';
 
 interface AchievementsPageProps {
   onNavigate: (path: string) => void;
@@ -204,30 +205,17 @@ export const AchievementsPage: React.FC<AchievementsPageProps> = ({ onNavigate }
             className="p-5 sm:p-7 rounded-[1.75rem] sm:rounded-[2rem] border border-[#3B82F6]/20 bg-[#050B18]/90 backdrop-blur-xl shadow-2xl flex flex-col justify-between hover:border-[#00D1FF]/40 hover:scale-[1.01] transition-all group"
           >
             <div>
-              {/* Optional Visual Image Card */}
-              {item.image && (
-                <div
-                  onClick={() => setActiveModal({ title: item.title, image: item.image!, organizer: item.organizer })}
-                  className="mb-4 relative rounded-xl overflow-hidden border border-white/10 bg-[#030B14] cursor-pointer group/cardimg aspect-[4/3] shadow-lg"
-                >
-                  <img
-                    src={item.image}
-                    alt={`${item.title}`}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover/cardimg:scale-105"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover/cardimg:opacity-40 transition-opacity" />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/cardimg:opacity-100 transition-opacity bg-black/40 backdrop-blur-xs">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/90 text-white text-xs font-semibold border border-white/30 shadow-xl">
-                      <ZoomIn className="w-3.5 h-3.5 text-[#00D1FF]" />
-                      <span>View Full Image</span>
-                    </span>
-                  </div>
-                  <span className="absolute bottom-2 left-2 text-[10px] font-bold text-white/90 bg-slate-950/80 px-2 py-0.5 rounded border border-white/10 backdrop-blur-sm">
-                    {item.badge}
-                  </span>
-                </div>
-              )}
+              {/* Authentic Photo or Verified Official Credential Certificate */}
+              <AuthenticCardMedia
+                id={`page_achieve_${item.id}`}
+                title={item.title}
+                subtitle={item.organizer}
+                badge={item.badge}
+                year={item.year}
+                category={item.category}
+                aspectRatioClass="aspect-[4/3] mb-4"
+                onZoom={(img) => setActiveModal({ title: item.title, image: img, organizer: item.organizer })}
+              />
 
               <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4">
                 <span className="text-[10px] font-bold text-[#00C4CC] uppercase tracking-wider">

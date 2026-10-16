@@ -1,12 +1,35 @@
 import React from 'react';
-import { Briefcase, Users, Calendar, ArrowRight, Building, Award } from 'lucide-react';
+import { Briefcase, Users, Calendar, ArrowRight, Award, Layers, CheckCircle2 } from 'lucide-react';
 
 interface ExperienceSectionProps {
   onNavigate: (path: string) => void;
 }
 
 export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onNavigate }) => {
+  // Section 1: Professional Experience (Direct from user image.png)
   const professionalExperience = [
+    {
+      title: "English Language Trainer - Smart Student's Finance (SSF) - CEC",
+      organization: 'BRAC Microfinance (Dabi)',
+      period: 'July 2026 – Present',
+      points: [
+        'Teach 65+ primary and high school students practical English communication skills.',
+        "Conduct interactive lessons to improve students' English proficiency and confidence.",
+      ],
+    },
+    {
+      title: 'Research Enumerator | Government-Funded Research Projects',
+      organization: 'Department of Public Administration, University of Rajshahi',
+      period: '2025 – 2026',
+      points: [
+        'Collected primary data from 250+ respondents and 10 FGDs through field interviews and surveys.',
+        'Conducted fieldwork across 5-6 upazilas for 5 research projects.',
+      ],
+    },
+  ];
+
+  // Section 2: Leadership and Organizing Experience (Renamed from former professional list, 4th item removed)
+  const leadershipAndOrganizingExperience = [
     {
       title: 'Branding and Production Wing Head',
       organization: 'CaseCation Season 2',
@@ -28,15 +51,9 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onNavigate
       type: 'Global Innovation Challenge',
       summary: 'Supervised administrative affairs, official communications, and volunteer coordination.',
     },
-    {
-      title: 'Deputy Director of Branding & Promotion',
-      organization: 'Rajshahi University MUN 2025 & North Bengal MUN 2025',
-      period: 'Jan 2025 – Jun 2025',
-      type: 'Diplomatic Conference',
-      summary: 'Formulated visual strategy and produced promotional merchandise and media kits.',
-    },
   ];
 
+  // Section 3: Leadership & Affiliations
   const leadershipAffiliations = [
     {
       title: 'Vice President (Resource Management & Planning)',
@@ -77,7 +94,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onNavigate
 
       <div className="relative z-10">
         {/* Section Header */}
-        <div className="mb-8 sm:mb-10 text-center lg:text-left relative">
+        <div className="mb-8 sm:mb-12 text-center lg:text-left relative">
           <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[30rem] h-[15rem] bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.25)_0%,rgba(37,99,235,0.15)_40%,transparent_70%)] blur-[40px] pointer-events-none -z-10 rounded-full mix-blend-screen hidden lg:block" />
           
           <span className="text-[#34D399] text-xs font-bold tracking-widest uppercase flex items-center justify-center lg:justify-start gap-2 mb-3 sm:mb-4">
@@ -95,84 +112,155 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onNavigate
           </p>
         </div>
 
-        {/* 2-Column Grid */}
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 mb-8 sm:mb-10">
+        {/* 3-Section Structured Grid: 1. Professional Experience, 2. Leadership and Organizing Experience, 3. Leadership & Affiliations */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-7 mb-8 sm:mb-10 items-stretch">
           
-          {/* Left Column: Professional & Strategic Experience */}
-          <div className="p-5 sm:p-8 md:p-10 rounded-[1.75rem] sm:rounded-[2rem] border border-[#3B82F6]/15 bg-[#0A1F4D]/35 backdrop-blur-md flex flex-col justify-between h-full shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:border-[#06B6D4]/30 transition-colors group">
+          {/* Column 1: Professional Experience (Newly Added from image.png) */}
+          <div className="p-5 sm:p-7 md:p-8 rounded-[1.75rem] sm:rounded-[2rem] border border-[#00D1FF]/25 bg-[#06142E]/70 backdrop-blur-xl flex flex-col justify-between h-full shadow-[0_10px_35px_rgba(0,0,0,0.4)] hover:border-[#00D1FF]/45 transition-all group">
             <div>
-              <div className="flex items-center gap-3.5 sm:gap-4 mb-6 sm:mb-8">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-[#06B6D4]/30 bg-[#06B6D4]/10 flex items-center justify-center group-hover:bg-[#06B6D4]/20 transition-colors shrink-0">
-                  <Briefcase className="w-5 h-5 text-[#06B6D4]" />
+              <div className="flex items-center gap-3.5 mb-6">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl border border-[#00D1FF]/30 bg-[#00D1FF]/10 flex items-center justify-center group-hover:bg-[#00D1FF]/20 transition-colors shrink-0 shadow-[0_0_15px_rgba(0,209,255,0.2)]">
+                  <Briefcase className="w-5 h-5 text-[#00D1FF]" />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-black text-[#F8FAFC] font-display">
-                  Professional Experience
-                </h3>
+                <div>
+                  <span className="text-[10px] font-bold tracking-widest text-[#00D1FF] uppercase block">
+                    Section 01
+                  </span>
+                  <h3 className="text-lg sm:text-xl font-black text-[#F8FAFC] font-display leading-tight">
+                    Professional Experience
+                  </h3>
+                </div>
               </div>
 
-              <div className="space-y-3 sm:space-y-4">
+              <div className="space-y-4">
                 {professionalExperience.map((item, idx) => (
                   <div
                     key={idx}
-                    className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-4 p-3.5 sm:p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:bg-[#061A40]/40 hover:border-[#3B82F6]/30 transition-all duration-300"
+                    className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:bg-[#061A40]/60 hover:border-[#00D1FF]/30 transition-all duration-300"
                   >
-                    <div className="min-w-0 flex-1">
-                      <h4 className="text-sm sm:text-base font-bold text-[#F8FAFC] mb-0.5 leading-snug">
+                    <div className="flex items-start justify-between gap-2 mb-1.5">
+                      <h4 className="text-sm font-bold text-[#F8FAFC] leading-snug">
                         {item.title}
                       </h4>
-                      <p className="text-xs sm:text-sm font-medium text-[#00D1FF] mb-1">
-                        {item.organization}
-                      </p>
-                      <p className="text-xs text-[#94A3B8] font-light leading-relaxed">
-                        {item.summary}
-                      </p>
                     </div>
-                    <div className="shrink-0 flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-400 mt-1 self-start sm:self-auto font-mono">
-                      <Calendar className="w-3.5 h-3.5 text-slate-500" />
-                      <span>{item.period}</span>
+                    <div className="flex items-center justify-between text-xs font-semibold text-[#00D1FF] mb-2.5">
+                      <span>{item.organization}</span>
+                      <span className="font-mono text-[11px] text-slate-400 shrink-0 ml-2">
+                        {item.period}
+                      </span>
                     </div>
+                    <ul className="space-y-1.5 text-xs text-[#CBD5E1] font-light">
+                      {item.points.map((pt, pIdx) => (
+                        <li key={pIdx} className="flex items-start gap-2 leading-relaxed">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#00D1FF] shrink-0 mt-0.5" />
+                          <span>{pt}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 ))}
               </div>
             </div>
+
+            <div className="pt-4 mt-4 border-t border-white/[0.06] text-[11px] text-slate-400 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#00D1FF]" />
+              <span>Teaching &amp; Fieldwork Research</span>
+            </div>
           </div>
 
-          {/* Right Column: Leadership & Affiliations */}
-          <div className="p-5 sm:p-8 md:p-10 rounded-[1.75rem] sm:rounded-[2rem] border border-[#3B82F6]/15 bg-[#0A1F4D]/35 backdrop-blur-md flex flex-col justify-between h-full shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:border-[#2563EB]/30 transition-colors group">
+          {/* Column 2: Leadership and Organizing Experience (Renamed with 4th item removed) */}
+          <div className="p-5 sm:p-7 md:p-8 rounded-[1.75rem] sm:rounded-[2rem] border border-[#3B82F6]/25 bg-[#06142E]/70 backdrop-blur-xl flex flex-col justify-between h-full shadow-[0_10px_35px_rgba(0,0,0,0.4)] hover:border-[#3B82F6]/45 transition-all group">
             <div>
-              <div className="flex items-center gap-3.5 sm:gap-4 mb-6 sm:mb-8">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-[#2563EB]/30 bg-[#2563EB]/10 flex items-center justify-center group-hover:bg-[#2563EB]/20 transition-colors shrink-0">
-                  <Users className="w-5 h-5 text-[#2563EB]" />
+              <div className="flex items-center gap-3.5 mb-6">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl border border-[#3B82F6]/30 bg-[#3B82F6]/10 flex items-center justify-center group-hover:bg-[#3B82F6]/20 transition-colors shrink-0 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                  <Layers className="w-5 h-5 text-[#3B82F6]" />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-black text-[#F8FAFC] font-display">
-                  Leadership &amp; Affiliations
-                </h3>
+                <div>
+                  <span className="text-[10px] font-bold tracking-widest text-[#38BDF8] uppercase block">
+                    Section 02
+                  </span>
+                  <h3 className="text-lg sm:text-xl font-black text-[#F8FAFC] font-display leading-tight">
+                    Leadership and Organizing Experience
+                  </h3>
+                </div>
               </div>
 
-              <div className="space-y-3 sm:space-y-4">
-                {leadershipAffiliations.map((item, idx) => (
+              <div className="space-y-4">
+                {leadershipAndOrganizingExperience.map((item, idx) => (
                   <div
                     key={idx}
-                    className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-4 p-3.5 sm:p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] hover:bg-[#061A40]/40 hover:border-[#3B82F6]/30 transition-all duration-300"
+                    className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:bg-[#061A40]/60 hover:border-[#3B82F6]/30 transition-all duration-300"
                   >
-                    <div className="min-w-0 flex-1">
-                      <h4 className="text-sm sm:text-base font-bold text-[#F8FAFC] mb-0.5 leading-snug">
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <h4 className="text-sm font-bold text-[#F8FAFC] leading-snug">
                         {item.title}
                       </h4>
-                      <p className="text-xs sm:text-sm font-medium text-[#00D1FF] mb-1">
-                        {item.organization}
-                      </p>
-                      <p className="text-xs text-[#94A3B8] font-light leading-relaxed">
-                        {item.summary}
-                      </p>
                     </div>
-                    <div className="shrink-0 flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-400 mt-1 self-start sm:self-auto font-mono">
-                      <Calendar className="w-3.5 h-3.5 text-slate-500" />
-                      <span>{item.period}</span>
+                    <div className="flex items-center justify-between text-xs font-semibold text-[#38BDF8] mb-1.5">
+                      <span>{item.organization}</span>
+                      <span className="font-mono text-[11px] text-slate-400 shrink-0 ml-2">
+                        {item.period}
+                      </span>
                     </div>
+                    <p className="text-xs text-[#CBD5E1] font-light leading-relaxed">
+                      {item.summary}
+                    </p>
                   </div>
                 ))}
               </div>
+            </div>
+
+            <div className="pt-4 mt-4 border-t border-white/[0.06] text-[11px] text-slate-400 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#3B82F6]" />
+              <span>National Competitions &amp; Operations</span>
+            </div>
+          </div>
+
+          {/* Column 3: Leadership & Affiliations */}
+          <div className="p-5 sm:p-7 md:p-8 rounded-[1.75rem] sm:rounded-[2rem] border border-[#34D399]/25 bg-[#06142E]/70 backdrop-blur-xl flex flex-col justify-between h-full shadow-[0_10px_35px_rgba(0,0,0,0.4)] hover:border-[#34D399]/45 transition-all group">
+            <div>
+              <div className="flex items-center gap-3.5 mb-6">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl border border-[#34D399]/30 bg-[#34D399]/10 flex items-center justify-center group-hover:bg-[#34D399]/20 transition-colors shrink-0 shadow-[0_0_15px_rgba(52,211,153,0.2)]">
+                  <Users className="w-5 h-5 text-[#34D399]" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold tracking-widest text-[#34D399] uppercase block">
+                    Section 03
+                  </span>
+                  <h3 className="text-lg sm:text-xl font-black text-[#F8FAFC] font-display leading-tight">
+                    Leadership &amp; Affiliations
+                  </h3>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                {leadershipAffiliations.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:bg-[#061A40]/60 hover:border-[#34D399]/30 transition-all duration-300"
+                  >
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <h4 className="text-sm font-bold text-[#F8FAFC] leading-snug">
+                        {item.title}
+                      </h4>
+                    </div>
+                    <div className="flex items-center justify-between text-xs font-semibold text-[#34D399] mb-1.5">
+                      <span>{item.organization}</span>
+                      <span className="font-mono text-[11px] text-slate-400 shrink-0 ml-2">
+                        {item.period}
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#CBD5E1] font-light leading-relaxed">
+                      {item.summary}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="pt-4 mt-4 border-t border-white/[0.06] text-[11px] text-slate-400 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#34D399]" />
+              <span>Campus Governance &amp; Social Initiatives</span>
             </div>
           </div>
 
@@ -190,7 +278,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ onNavigate
             id="experience-view-full-btn"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-[#2563EB] to-[#06B6D4] text-[#F8FAFC] font-bold text-xs sm:text-sm tracking-wider uppercase shadow-[0_4px_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] hover:scale-105 active:scale-95 transition-all min-h-[48px]"
           >
-            <span>View Full Experience</span>
+            <span>View Full Experience Timeline</span>
             <ArrowRight className="w-4 h-4" />
           </a>
         </div>

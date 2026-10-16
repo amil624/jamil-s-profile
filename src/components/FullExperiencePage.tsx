@@ -8,6 +8,28 @@ interface FullExperiencePageProps {
 export const FullExperiencePage: React.FC<FullExperiencePageProps> = ({ onNavigate }) => {
   const fullTimeline = [
     {
+      role: "English Language Trainer - Smart Student's Finance (SSF) - CEC",
+      organization: 'BRAC Microfinance (Dabi)',
+      type: 'Professional Experience',
+      period: 'July 2026 – Present',
+      location: 'Rajshahi, Bangladesh',
+      highlights: [
+        'Teach 65+ primary and high school students practical English communication skills.',
+        "Conduct interactive lessons to improve students' English proficiency and confidence.",
+      ],
+    },
+    {
+      role: 'Research Enumerator | Government-Funded Research Projects',
+      organization: 'Department of Public Administration, University of Rajshahi',
+      type: 'Professional Experience',
+      period: '2025 – 2026',
+      location: 'University of Rajshahi',
+      highlights: [
+        'Collected primary data from 250+ respondents and 10 FGDs through field interviews and surveys.',
+        'Conducted fieldwork across 5-6 upazilas for 5 research projects.',
+      ],
+    },
+    {
       role: 'Vice President (Resource Management & Planning)',
       organization: 'Rajshahi University Business Club (RUBC)',
       type: 'Executive Leadership',

@@ -111,7 +111,7 @@ export const careerHighlights: CareerHighlight[] = [
       'Brand Identity & Cohesion: Formulated a distinct, high-impact aesthetic identity spanning digital social media kits, stage LED backdrops, print collateral, and certificates.',
       'Grand Finale Stage Execution: Managed full visual stage production, video teasers, and presentation frameworks during the grand finale partnering with national sponsors.',
     ],
-    imageUrl: '/images/casecation_award.jpg',
+    imageUrl: '',
     imageCaption: 'Recognition at CaseCation Season 2 Grand Finale Stage Ceremony',
     tags: ['Creative Direction', '450+ Assets', 'Nationwide Outreach', 'Team Leadership'],
   },
@@ -138,7 +138,7 @@ export const careerHighlights: CareerHighlight[] = [
       'Campus-wide Outreach: Architected strategic communication drives that onboarded and engaged 750+ student teams across University of Rajshahi departments.',
       'Operational Frameworks: Established real-time event management protocols, judge coordination, and stage setups for semi-final and grand finale rounds.',
     ],
-    imageUrl: '/images/hult_team_ru.jpg',
+    imageUrl: '',
     imageCaption: 'Hult Prize at University of Rajshahi — Organizing Committee on Campus Grounds',
     tags: ['Global Program', '750+ Teams', 'Cross-functional Management', 'Social Enterprise'],
   },
@@ -165,7 +165,7 @@ export const careerHighlights: CareerHighlight[] = [
       'Mission BluePulse: Save Life Below Water campaign along the Padma River, raising direct ecological awareness across 30+ riverbank households and local communities.',
       'Winter Heaven: Built and deployed 05+ temporary insulated shelters and welfare points for street animals during extreme North Bengal winter conditions.',
     ],
-    imageUrl: '/images/pathchinhno_social.jpg',
+    imageUrl: '',
     imageCaption: 'Project Pathochinhno Environmental Volunteers along the Padma River in Rajshahi',
     tags: ['Sustainability', 'Padma River', 'Tree Plantation', 'Animal Welfare', 'UN SDGs'],
     subProjects: [
@@ -194,6 +194,121 @@ export const careerHighlights: CareerHighlight[] = [
   },
 ];
 
+export interface DetailedRoleItem {
+  id: string;
+  role: string;
+  organization: string;
+  subOrganization?: string;
+  period: string;
+  type?: string;
+  points: string[];
+}
+
+export const professionalExperienceList: DetailedRoleItem[] = [
+  {
+    id: 'english-language-trainer',
+    role: "English Language Trainer - Smart Student's Finance (SSF) - CEC",
+    organization: 'BRAC Microfinance (Dabi)',
+    period: 'July 2026 – Present',
+    type: 'Corporate Educational Initiative',
+    points: [
+      'Teach 65+ primary and high school students practical English communication skills.',
+      "Conduct interactive lessons to improve students' English proficiency and confidence.",
+    ],
+  },
+  {
+    id: 'research-enumerator',
+    role: 'Research Enumerator | Government-Funded Research Projects',
+    organization: 'Department of Public Administration, University of Rajshahi',
+    period: '2025 – 2026',
+    type: 'Academic Field Research',
+    points: [
+      'Collected primary data from 250+ respondents and 10 FGDs through field interviews and surveys.',
+      'Conducted fieldwork across 5-6 upazilas for 5 research projects.',
+    ],
+  },
+];
+
+export const leadershipAndOrganizingExperience: DetailedRoleItem[] = [
+  {
+    id: 'casecation-wing-head',
+    role: 'Branding and Production Wing Head',
+    organization: 'CaseCation Season 2',
+    period: 'Aug 2025 – Oct 2025',
+    type: 'National Case Competition',
+    points: [
+      'Led 15-member team; produced 450+ visual assets & 20+ nationwide banners.',
+      'Managed full visual stage production, video teasers, and presentation frameworks during grand finale.',
+    ],
+  },
+  {
+    id: 'unravel-5x',
+    role: 'Deputy Director of Branding & Promotion',
+    organization: 'UNRAVEL 5X',
+    period: 'Aug 2025 – Sep 2025',
+    type: 'Business Case Competition',
+    points: [
+      'Managed promotional design deliverables, producing 150+ custom visual designs and 10+ promotional banners.',
+      'Coordinated social media publication calendar and participant engagement campaigns across regional campuses.',
+    ],
+  },
+  {
+    id: 'hult-admin-chief',
+    role: 'Chief of Administration',
+    organization: 'HULT PRIZE at University of Rajshahi 2024-25',
+    period: 'Nov 2024 – Feb 2025',
+    type: 'Global Innovation Challenge',
+    points: [
+      'Supervised administrative logistics, event scheduling, and operational resource coordination for seamless execution.',
+      'Managed volunteer shifts, venue booking, inventory distribution, and real-time contingency resolution across all event days.',
+    ],
+  },
+];
+
+export const leadershipAndAffiliations: DetailedRoleItem[] = [
+  {
+    id: 'rubc-vp',
+    role: 'Vice President (Resource Management & Planning)',
+    organization: 'Rajshahi University Business Club (RUBC)',
+    period: 'Apr 2026 – Present',
+    type: 'Executive Leadership',
+    points: [
+      'Directing HR and strategic operations for 200+ members and optimizing leadership development pipelines.',
+      'Formulating and conducting skill-building workshops to enhance member capabilities in strategic planning.',
+    ],
+  },
+  {
+    id: 'hult-deputy-director',
+    role: 'Former Deputy Campus Director',
+    organization: 'HULT PRIZE at University of Rajshahi',
+    period: '2023 – 2024',
+    type: 'Global Campus Operations',
+    points: [
+      'Spearheaded campus-wide mobilization across 750+ teams and directed 50+ members across 3 specialized wings.',
+    ],
+  },
+  {
+    id: 'pathchinhno-lead',
+    role: 'Founder & Lead Coordinator',
+    organization: 'Project Pathchinhno (পথ চিহ্ন)',
+    period: '2023 – Present',
+    type: 'Social & ESG Initiative',
+    points: [
+      'Spearheading The Green FootPrint (170+ trees planted), Mission BluePulse (Padma River conservation), and Winter Heaven.',
+    ],
+  },
+  {
+    id: 'pasa-lead',
+    role: 'Executive Committee Member & Lead',
+    organization: 'Public Administration Student Association',
+    period: '2023 – Present',
+    type: 'Student Governance',
+    points: [
+      'Coordinating student welfare, academic seminars, and inter-batch cultural initiatives.',
+    ],
+  },
+];
+
 export const organizingExperience: ExperienceItem[] = [
   {
     id: 'unravel-5x',
@@ -217,17 +332,6 @@ export const organizingExperience: ExperienceItem[] = [
       'Managed volunteer shifts, venue booking, inventory distribution, and real-time contingency resolution across all event days.',
     ],
   },
-  {
-    id: 'mun-branding',
-    role: 'Deputy Director of Branding & Promotion',
-    organization: 'Rajshahi Univ. MUN 2025 & North Bengal MUN 2025',
-    period: 'Dec 2024 – Feb 2025',
-    category: 'diplomacy',
-    highlights: [
-      'Managed press relations, public outreach materials, and visual branding for two major diplomacy conferences.',
-      'Delivered official conference background guides, delegate badges, placards, and media kits.',
-    ],
-  },
 ];
 
 export const honorsAndAwards: AwardItem[] = [
@@ -239,7 +343,6 @@ export const honorsAndAwards: AwardItem[] = [
     year: '2024–2025',
     description: 'Selected as top finalist among thousands of youth innovators across Bangladesh for designing community-driven scalable social solutions.',
     featured: true,
-    image: '/images/cert_unicef_imagen.jpg',
   },
   {
     id: 'ignite-rubc',
@@ -249,7 +352,6 @@ export const honorsAndAwards: AwardItem[] = [
     year: '2024',
     description: 'Secured 1st Place for strategic analysis, macroeconomic articulation, and youth enterprise business critique.',
     featured: true,
-    image: '/images/ignite_champion_award.jpg',
   },
   {
     id: 'casecation-production-award',
@@ -259,7 +361,6 @@ export const honorsAndAwards: AwardItem[] = [
     year: '2025',
     description: 'Special on-stage executive crest and citation for curating 450+ promotional assets and leading 15+ creative team members.',
     featured: true,
-    image: '/images/casecation_award.jpg',
   },
   {
     id: 'mun-special-mention',
@@ -302,13 +403,11 @@ export const leadershipCertifications: CertificationItem[] = [
     title: 'Aspire Leadership Program',
     issuer: 'Aspire Institute (Founded by Harvard University Professors)',
     year: '2025',
-    image: '/images/cert_aspire_leaders.jpg',
   },
   {
     title: 'Event Planning & Project Management',
     issuer: 'Bangladesh Youth Leadership Center (BYLC)',
     year: '2024',
-    image: '/images/cert_bylc_project.jpg',
   },
   {
     title: 'Bystander Youth Leadership Training',
@@ -319,7 +418,6 @@ export const leadershipCertifications: CertificationItem[] = [
     title: 'Hult Prize Global Campus Leadership',
     issuer: 'Hult Prize at University of Rajshahi',
     year: '2024–2025',
-    image: '/images/cert_hult_prize.jpg',
   },
 ];
 
@@ -333,7 +431,6 @@ export const certificationsList = [
     credentialId: 'ASP-2025-LEAD',
     description:
       'Immersive curriculum emphasizing strengths-based leadership, global cross-cultural collaboration, and design-thinking approaches to systemic societal challenges.',
-    image: '/images/cert_aspire_leaders.jpg',
   },
   {
     id: 'unicef-imagen',
@@ -344,7 +441,6 @@ export const certificationsList = [
     credentialId: 'UNICEF-IMAGEN-25',
     description:
       'Selected national finalist and boot-camp participant for developing youth-led social enterprise models addressing climate sustainability and grassroots impact.',
-    image: '/images/cert_unicef_imagen.jpg',
   },
   {
     id: 'bylc-event-planning',
@@ -355,7 +451,6 @@ export const certificationsList = [
     credentialId: 'BYLC-EP-4921',
     description:
       'Certified training in project lifecycles, critical path management, crisis contingency planning, and stakeholder communication for mega-events.',
-    image: '/images/cert_bylc_project.jpg',
   },
   {
     id: 'hult-appreciation',
@@ -366,7 +461,6 @@ export const certificationsList = [
     credentialId: 'HULT-RU-2025-LEAD',
     description:
       'Official Certificate of Appreciation for outstanding leadership as Deputy Campus Director and Chief of Administration, successfully onboarding 750+ student teams.',
-    image: '/images/cert_hult_prize.jpg',
   },
   {
     id: 'rupantar-bystander',
@@ -427,6 +521,7 @@ export const skillCategories: SkillCategory[] = [
   {
     category: 'Creative & Technical Software Stack',
     skills: [
+      { name: 'Meta Business Suite', level: 'Page Management & Campaign Ops' },
       { name: 'Adobe Illustrator', level: 'Visual Campaign & Vector Design' },
       { name: 'Adobe Photoshop', level: 'Photo Compositing & Brand Collateral' },
       { name: 'Canva Pro', level: 'Rapid Social Media Graphics' },
@@ -451,7 +546,7 @@ export const educationList: EducationItem[] = [
     degree: 'Higher Secondary Certificate (HSC) — Humanities',
     institution: 'Pirgachha Govt. College',
     location: 'Pirgachha, Rangpur, Bangladesh',
-    period: 'Completed (Dinajpur Board)',
+    period: 'Passed: 2021 (Dinajpur Board)',
     result: 'GPA 5.00 / 5.00 (Golden / Perfect GPA)',
     details: 'Academic excellence in humanities curriculum, critical analysis, and regional debate and general knowledge quiz competitions.',
   },
@@ -460,8 +555,8 @@ export const educationList: EducationItem[] = [
     institution: 'Jnankur High School',
     location: 'Pirgachha, Rangpur, Bangladesh',
     period: 'Completed (Dinajpur Board)',
-    result: 'GPA 5.00 / 5.00 (Golden / Perfect GPA)',
-    details: 'Graduated with highest GPA distinction; active in school science club, mathematics Olympiads, cultural competitions, and academic tournaments.',
+    result: 'GPA 4.78 / 5.00',
+    details: 'Graduated with high distinction; active in school science club, mathematics Olympiads, cultural competitions, and academic tournaments.',
   },
 ];
 
@@ -483,3 +578,84 @@ export const academicReferences: AcademicReference[] = [
     phone: '+880 1716-438902',
   },
 ];
+
+export interface SportsTournamentItem {
+  id: string;
+  sport: 'basketball' | 'cricket' | 'football';
+  tournamentName: string;
+  season: string;
+  achievement: string;
+  isChampion: boolean;
+  team: string;
+  role: string;
+  keyHighlights: string[];
+  accolades: string[];
+  accentColor: string;
+}
+
+export const sportsAndGamesData: SportsTournamentItem[] = [
+  {
+    id: 'cricket-tournament',
+    sport: 'cricket',
+    tournamentName: 'Intra Department Cricket Tournament',
+    season: '2023 & 2026',
+    achievement: 'Champion 2 Times (2023, 2026)',
+    isChampion: true,
+    team: 'Department of Public Administration Cricket Squad',
+    role: 'Captain (Both Editions) & All-Rounder',
+    keyHighlights: [
+      'Led team as Captain to two consecutive championship titles (2023, 2026)',
+      'Awarded Man of the Tournament (MVP) in both tournaments',
+      'Orchestrated strategic field settings, bowling rotations, and decisive match finishes under high pressure',
+    ],
+    accolades: [
+      '2x Champion',
+      '2x Team Captain',
+      '2x Man of the Tournament (MVP)',
+    ],
+    accentColor: '#34D399',
+  },
+  {
+    id: 'football-tournament',
+    sport: 'football',
+    tournamentName: 'Intra University Football Tournament',
+    season: '2023, 2024, 2025',
+    achievement: 'Champion 3 Times (2023, 2024, 2025)',
+    isChampion: true,
+    team: 'Department of Public Administration Football Team',
+    role: 'Captain (2 Times) & Playmaker',
+    keyHighlights: [
+      'Achieved historic 3-consecutive-year championship streak (2023, 2024, 2025)',
+      'Led the team as Captain in 2 out of 3 championship campaigns',
+      'Demonstrated tactical on-field vision, high stamina, and defensive-to-offensive transitions in inter-department knockout stages',
+    ],
+    accolades: [
+      '3x University Champion',
+      '2x Team Captain',
+      '3-Peat Dynasty',
+    ],
+    accentColor: '#00D1FF',
+  },
+  {
+    id: 'basketball-tournament',
+    sport: 'basketball',
+    tournamentName: 'Intra University Basket Ball Tournament 2024-25',
+    season: '2024–2025',
+    achievement: 'Runner-up (2025)',
+    isChampion: false,
+    team: 'Department of Public Administration Basket Ball Team',
+    role: 'Defender',
+    keyHighlights: [
+      'Secured Runner-up trophy at university-wide court championship',
+      'Played primary role as starting Defender anchoring defensive rebounds and perimeter stops',
+      'Committed high-intensity team play, quick court transitions, and tactical man-to-man coverage',
+    ],
+    accolades: [
+      'Runner-up (2025)',
+      'Starting Defender',
+      'Court Finalist',
+    ],
+    accentColor: '#F59E0B',
+  },
+];
+

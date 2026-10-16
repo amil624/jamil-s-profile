@@ -17,6 +17,7 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { careerHighlights } from '../data/portfolioData';
 import { fetchPortfolioImages, PortfolioImage } from '../lib/supabase';
+import { AuthenticCardMedia } from './AuthenticCardMedia';
 
 interface PortfolioSectionProps {
   onOpenCv: () => void;
@@ -299,42 +300,19 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ onOpenCv }) 
             transition={{ duration: 0.28, ease: 'easeOut' }}
             className="grid lg:grid-cols-12 gap-6 items-stretch w-full"
           >
-            {/* Left Side: Visual Image & Floating Badges */}
+            {/* Left Side: Authentic Media & Credential Badge */}
             <div className="col-span-12 lg:col-span-6 xl:col-span-5 flex flex-col justify-between">
-              <div className="relative aspect-[16/10] sm:aspect-[4/3] w-full rounded-2xl overflow-hidden border border-[#3B82F6]/20 shadow-inner group">
-                <img
-                  src={currentProject.image}
-                  alt={currentProject.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 cursor-pointer"
-                  onClick={() => setPreviewImage(currentProject.image)}
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#030B14]/80 via-transparent to-transparent pointer-events-none" />
-                
-                {/* Expand Image Button */}
-                <button
-                  onClick={() => setPreviewImage(currentProject.image)}
-                  aria-label="View full image"
-                  className="absolute bottom-3 right-3 p-2 rounded-lg bg-black/60 backdrop-blur-md text-white/80 hover:text-white hover:bg-black/80 border border-white/15 transition-all z-20"
-                >
-                  <Maximize2 className="w-4 h-4" />
-                </button>
-
-                {/* Top Right Floating Badge */}
-                <div className="absolute top-3 right-3 sm:top-4 sm:right-4 px-2.5 sm:px-3 py-1 bg-black/70 backdrop-blur-md rounded-full border border-white/15 flex items-center gap-1.5 sm:gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00D1FF] animate-pulse" />
-                  <span className="text-[9px] sm:text-[10px] font-bold text-[#F8FAFC] tracking-wider uppercase font-display truncate max-w-[160px]">
-                    {currentProject.badge}
-                  </span>
-                </div>
-
-                {/* Bottom Overlay Label */}
-                <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 right-12">
-                  <span className="text-[11px] sm:text-xs font-semibold text-[#00C4CC] uppercase tracking-wide truncate block">
-                    {currentProject.role}
-                  </span>
-                </div>
-              </div>
+              <AuthenticCardMedia
+                id={`portfolio_${currentProject.id}`}
+                title={currentProject.title}
+                subtitle={`${currentProject.role} • ${currentProject.organization}`}
+                badge={currentProject.badge}
+                year={currentProject.period}
+                initialImage={currentProject.id === 'rubc-exec' ? '/images/jamil_profile_official.jpg' : ''}
+                category={currentProject.category}
+                aspectRatioClass="aspect-[16/10] sm:aspect-[4/3]"
+                onZoom={(img) => setPreviewImage(img)}
+              />
 
               {/* 3 Metric Pills */}
               <div className="grid grid-cols-3 gap-2 sm:gap-3 mt-3 sm:mt-4">
